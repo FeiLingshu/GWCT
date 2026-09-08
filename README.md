@@ -2,7 +2,7 @@
 
 <blockquote>
   <div align="Left">
-    <img src="./GWCT_UI.png" alt="GWCT UI" />
+    <img src="./GWCTUI.png" alt="GWCT UI" />
   </div>
   <strong>&nbsp;&nbsp;· UI 效果图</strong>
 </blockquote>
