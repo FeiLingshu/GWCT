@@ -1,4 +1,4 @@
-# __`GWCT`&nbsp;&nbsp;`Game Window Control Tool`__
+# __[`GWCT`](https://github.com/FeiLingshu/GWCT)&nbsp;&nbsp;[`Game Window Control Tool`](https://github.com/FeiLingshu/GWCT)__
 
 <blockquote>
   <div align="Left">
