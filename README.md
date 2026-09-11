@@ -29,7 +29,7 @@
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100855eedd84aa057d4da04401201bd55074332c0e6f9d8b882c8fb74005051af68844d51b21851a399392dc3fb5b1e9b9857aade696ff006cb81c106c7aa964253b455236eef5c2bd633633d72738e474b8731d51efe64e15436d401e1008dc73757a72e67170d9e0975c1ef036485bb2526a96b6d190efc65cf2729731d54dbb4
   · 哈希算法：SHA1
-  · 文件大小：22,180 字节 (已压缩)
+  · 文件大小：22,210 字节 (已压缩)
 ```
 
 ---
@@ -46,6 +46,9 @@
 - [x] __可切换窗口位置锁定__
   - __使用 `F12` 快捷键__
 - [x] __配置文件支持热重载__
+  - __点击"推送配置数据"后，配置信息才会同步至后台组件和保存至配置文件__
+  - __每次点击"推送配置数据"都会向磁盘写入一次全量配置信息，为了磁盘健康，请不要高频点击__
+  - __由于 [Windows长路径支持](https://learn.microsoft.com/zh-cn/windows/win32/fileio/maximum-file-path-limitation?tabs=registry) 等限制，在不同设备间共享配置文件可能会造成问题__
 - [x] __修改窗口显示样式__
   - __`Windows 11 +` 窗口圆角+调整窗口框架颜色__
   - __`Windows 10 build 19041 +` 调整窗口框架颜色__
@@ -96,7 +99,7 @@
 > - __该功能会对程序执行基于声誉的安全检查__
 > - __由于本程序没有购买数字证书，且不是通过 `Microsoft Store` 分发的，导致其可能无法通过 `SmartScreen` 的安全检测__
 > - __程序本身是安全的，出现 `SmartScreen` 警告时，请手动忽略__
->> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/28174c42e4adcaa91d6ae18ea889c3ebe16c300f1d02d334a466cf09c67c50a7)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/729b05165fd2f63c9e469c30563d2cb927e5b008db3234aef3f66d21ab3b0b38)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
+>> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/ebc7b8a4ac5d65c9c8fe159691635ab937ed7c7a66684e7494024bb25724cab1)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/129e77ffec180605a72d4f7aa917baa656715d2b875839329b4e6af2c19981b5)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
 >> - __请注意，报告中行为分析中的风险项并非真正存在风险，其中部分为实现功能所必须的行为，部分为 `.Net` 框架底层的自发行为__
 >> - __如有疑问，可自行查看源代码进行分析，作者从未在程序中植入恶意代码，可放心使用__
 
