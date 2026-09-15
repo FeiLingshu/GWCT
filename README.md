@@ -9,7 +9,7 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
 
 <blockquote>
   <div align="Left">
-    <img src="./EFFECT.png" alt="UI Effect" />
+    <img src="./EFFECT.webp" alt="UI Effect" />
   </div>
   <strong>&nbsp;&nbsp;&nbsp;UI 效果图 *</strong>
 </blockquote>
