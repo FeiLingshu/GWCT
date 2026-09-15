@@ -1,4 +1,11 @@
-# __[`GWCT`](https://github.com/FeiLingshu/GWCT)&nbsp;&nbsp;[`Game Window Control Tool`](https://github.com/FeiLingshu/GWCT)__
+```C#
+const var Repositories = "https://github.com/FeiLingshu/GWCT";
+╭─╴╭─╮╭┬╮╭─╴   ╷ ╷╷╭╮╷╶┬╮╭─╮╷ ╷   ╭─╴╭─╮╭╮╷╶┬╴╭─╮╭─╮╷     ╶┬╴╭─╮╭─╮╷  
+│╶╮├─┤│││├╴    │╷│││╰┤ │││ ││╷│   │  │ ││╰┤ │ ├┬╯│ ││      │ │ ││ ││  
+╰─╯╵ ╵╵ ╵╰─╴   ╰┴╯╵╵ ╵╶┴╯╰─╯╰┴╯   ╰─╴╰─╯╵ ╵ ╵ ╵╰╴╰─╯╰─╴    ╵ ╰─╯╰─╯╰─╴
+```
+
+#
 
 <blockquote>
   <div align="Left">
