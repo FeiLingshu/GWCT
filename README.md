@@ -28,7 +28,7 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100ade4a76802241de71f5bc96986bb265d675562e388c3eb234667df86face1485948aab7587f35669c8811b6c4194c09152270bd20efda25e75e118eb350ca024bc31a12c28b17d79ca11b2f177240d663253f6db3badf5a16459a4c036e0272a0fe267d7eb5406cde63e394e5847faa2cb2be4c2617aab66b103c2925d7477d1
   · 哈希算法：SHA1
-  · 文件大小：90,624 字节
+  · 文件大小：92,672 字节
 核心组件信息 (模块已强签名) (已内嵌)
   · 名称：gwctcore
   · 架构：AnyCPU
@@ -84,7 +84,7 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
 
 > __程序性能表现良好__
 
-- __单文件运行，极小包体 (约 `88.5KB` )__
+- __单文件运行，极小包体 ( `< 100KB` )__
 - __运行过程中仅会引入极少的性能开销，自身会配置效能模式 (不受支持时会退化成低进程优先级模式)__
 - __使用 `ProcMgr` 组件，实现高速低开销进程快照和筛选__
 - __使用 `WinEvent` 组件，窗口调整实时响应__
@@ -105,7 +105,7 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
 > - __该功能会对程序执行基于声誉的安全检查__
 > - __由于本程序没有购买数字证书，且不是通过 `Microsoft Store` 分发的，导致其可能无法通过 `SmartScreen` 的安全检测__
 > - __程序本身是安全的，出现 `SmartScreen` 警告时，请手动忽略__
->> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/29a77f78b7c21697ca497d264e2e7fe28991c55a8952a26bf59f4e4358219a4d)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/4927bd82be74870afe01288c28bc453706bf976c9e18528230b3505ab749fd3f)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
+>> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/4e08356e52ef706be22b3e47da2a9755433d74db74607f7fc1f3112f84a71bfa)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/4927bd82be74870afe01288c28bc453706bf976c9e18528230b3505ab749fd3f)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
 >> - __请注意，报告中行为分析中的风险项并非真正存在风险，其中部分为实现功能所必须的行为，部分为 `.Net` 框架底层的自发行为__
 >> - __如有疑问，可自行查看源代码进行分析，作者从未在程序中植入恶意代码，可放心使用__
 
