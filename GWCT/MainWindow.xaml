@@ -1,0 +1,1085 @@
+﻿<Window
+    x:Class="GWCT.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:GWCT"
+    mc:Ignorable="d"
+    Title="GWCT @ FeiLingshu"
+    WindowStartupLocation="CenterScreen"
+    Topmost="True"
+    Style="{StaticResource WindowStyle}">
+    <WindowChrome.WindowChrome>
+        <StaticResource
+            ResourceKey="WindowChromeStyle" />
+    </WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.Resources>
+            <Style
+                TargetType="{x:Type Control}">
+                <Setter
+                    Property="FocusVisualStyle"
+                    Value="{x:Null}" />
+            </Style>
+            <Style
+                TargetType="ScrollBar"
+                BasedOn="{StaticResource {x:Type Control}}" />
+            <Style
+                TargetType="ScrollViewer"
+                BasedOn="{StaticResource {x:Type Control}}" />
+            <Style
+                TargetType="ContextMenu"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="OverridesDefaultStyle"
+                    Value="True" />
+                <Setter
+                    Property="HasDropShadow"
+                    Value="False" />
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate
+                            TargetType="ContextMenu">
+                            <Border
+                                Background="{StaticResource DarkBg}"
+                                BorderBrush="{StaticResource DarkBorder}"
+                                BorderThickness="2"
+                                CornerRadius="5"
+                                Padding="3,5"
+                                Margin="5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition
+                                            Height="Auto" />
+                                        <RowDefinition
+                                            Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <ItemsPresenter
+                                        Grid.Row="0" />
+                                    <Border
+                                        Background="{StaticResource DarkBorder}"
+                                        CornerRadius="0,0,4,4"
+                                        Margin="-4,5,-4,-6"
+                                        Padding="1,0,1,1"
+                                        ClipToBounds="True"
+                                        Grid.Row="1">
+                                        <TextBlock
+                                            Foreground="{StaticResource Green}"
+                                            SnapsToDevicePixels="True"
+                                            UseLayoutRounding="True"
+                                            Text="Copyright 2026 By FeiLingshu"
+                                            Padding="5,2" />
+                                    </Border>
+                                </Grid>
+                                <Border.Effect>
+                                    <StaticResource
+                                        ResourceKey="PerformanceShadow" />
+                                </Border.Effect>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                TargetType="ListBox"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="VirtualizingPanel.IsVirtualizing"
+                    Value="True" />
+                <Setter
+                    Property="VirtualizingPanel.VirtualizationMode"
+                    Value="Recycling" />
+                <Setter
+                    Property="ScrollViewer.HorizontalScrollBarVisibility"
+                    Value="Disabled" />
+                <Setter
+                    Property="ScrollViewer.VerticalScrollBarVisibility"
+                    Value="Visible" />
+                <Setter
+                    Property="HorizontalContentAlignment"
+                    Value="Stretch" />
+                <Setter
+                    Property="VerticalContentAlignment"
+                    Value="Center" />
+                <Setter
+                    Property="Background"
+                    Value="{StaticResource DarkBg}" />
+                <Setter
+                    Property="BorderBrush"
+                    Value="{x:Null}" />
+                <Setter
+                    Property="BorderThickness"
+                    Value="0" />
+                <Setter
+                    Property="Padding"
+                    Value="5" />
+            </Style>
+            <Style
+                TargetType="ListBoxItem"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="Padding"
+                    Value="5,2" />
+            </Style>
+            <Style
+                x:Key="TextBase"
+                TargetType="Control"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="SnapsToDevicePixels"
+                    Value="True" />
+                <Setter
+                    Property="UseLayoutRounding"
+                    Value="True" />
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource LightText}" />
+            </Style>
+            <Style
+                TargetType="MenuItem"
+                BasedOn="{StaticResource TextBase}">
+                <Setter
+                    Property="Background"
+                    Value="{StaticResource DarkBg}" />
+                <Setter
+                    Property="BorderBrush"
+                    Value="Transparent" />
+                <Setter
+                    Property="BorderThickness"
+                    Value="1" />
+                <Setter
+                    Property="Padding"
+                    Value="5,5" />
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate
+                            TargetType="MenuItem">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="3">
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <ContentPresenter
+                                        ContentSource="Icon"
+                                        Width="15"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Margin="5,0,10,0" />
+                                    <ContentPresenter
+                                        ContentSource="Header"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left" />
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver"
+                                    Value="True">
+                                    <Setter
+                                        Property="Background"
+                                        Value="{StaticResource DarkBorder}" />
+                                    <Setter
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Blue}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                TargetType="Separator"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="Height"
+                    Value="2" />
+                <Setter
+                    Property="Margin"
+                    Value="0,5" />
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle
+                                Height="{TemplateBinding Height}"
+                                Fill="{TemplateBinding Background}"
+                                Stroke="{TemplateBinding Background}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                x:Key="CustomToolTipStyle"
+                TargetType="ToolTip"
+                BasedOn="{StaticResource TextBase}">
+                <Setter
+                    Property="OverridesDefaultStyle"
+                    Value="True" />
+                <Setter
+                    Property="HasDropShadow"
+                    Value="False" />
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate
+                            TargetType="ToolTip">
+                            <Border
+                                Background="{StaticResource DarkBg}"
+                                BorderBrush="{StaticResource DarkBorder}"
+                                BorderThickness="2"
+                                CornerRadius="5"
+                                Padding="3"
+                                Margin="5">
+                                <ContentPresenter
+                                    Margin="5,1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center" />
+                                <Border.Effect>
+                                    <StaticResource
+                                        ResourceKey="PerformanceShadow" />
+                                </Border.Effect>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                x:Key="EnabledStyle"
+                TargetType="TextBlock">
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource LightText}" />
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ElementName=CPUCore, Path=IsEnabled}"
+                        Value="False">
+                        <Setter
+                            Property="Foreground"
+                            Value="{StaticResource DimText}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="CustomCheckBoxStyle"
+                TargetType="CheckBox"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="HorizontalAlignment"
+                    Value="Left" />
+                <Setter
+                    Property="VerticalAlignment"
+                    Value="Bottom" />
+                <Setter
+                    Property="HorizontalContentAlignment"
+                    Value="Left" />
+                <Setter
+                    Property="VerticalContentAlignment"
+                    Value="Center" />
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource LightText}" />
+                <Setter
+                    Property="Background"
+                    Value="Transparent" />
+                <Setter
+                    Property="BorderBrush"
+                    Value="{x:Null}" />
+                <Setter
+                    Property="BorderThickness"
+                    Value="0" />
+                <Setter
+                    Property="Height"
+                    Value="20" />
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate
+                            TargetType="CheckBox">
+                            <Grid
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+                                        Width="Auto" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid
+                                    Grid.Column="0"
+                                    Width="16"
+                                    Height="16">
+                                    <Rectangle
+                                        x:Name="Outer"
+                                        RadiusX="2"
+                                        RadiusY="2"
+                                        Stroke="{StaticResource DimBorder}"
+                                        StrokeThickness="2" />
+                                    <Rectangle
+                                        x:Name="Inner"
+                                        Width="10"
+                                        Height="10"
+                                        Fill="{StaticResource LightBg}"
+                                        Opacity="0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                                </Grid>
+                                <ContentPresenter
+                                    Grid.Column="1"
+                                    RecognizesAccessKey="True" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver"
+                                    Value="True">
+                                    <Setter
+                                        TargetName="Outer"
+                                        Property="Stroke"
+                                        Value="{StaticResource Blue}" />
+                                </Trigger>
+                                <Trigger
+                                    Property="IsChecked"
+                                    Value="True">
+                                    <Setter
+                                        TargetName="Inner"
+                                        Property="Opacity"
+                                        Value="1" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                x:Key="UIButton"
+                TargetType="Border">
+                <Setter
+                    Property="HorizontalAlignment"
+                    Value="Right" />
+                <Setter
+                    Property="VerticalAlignment"
+                    Value="Top" />
+                <Setter
+                    Property="Width"
+                    Value="30" />
+                <Setter
+                    Property="Height"
+                    Value="30" />
+                <Setter
+                    Property="CornerRadius"
+                    Value="5" />
+                <Setter
+                    Property="Background"
+                    Value="{StaticResource DarkBorder}" />
+            </Style>
+            <Style
+                x:Key="BasePathHighlight"
+                TargetType="Path">
+                <Setter
+                    Property="HorizontalAlignment"
+                    Value="Center" />
+                <Setter
+                    Property="VerticalAlignment"
+                    Value="Center" />
+                <Setter
+                    Property="StrokeThickness"
+                    Value="2" />
+                <Setter
+                    Property="IsHitTestVisible"
+                    Value="False" />
+                <Setter
+                    Property="Fill"
+                    Value="{StaticResource DimText}" />
+                <Setter
+                    Property="Stroke"
+                    Value="{StaticResource DimText}" />
+            </Style>
+            <Style
+                x:Key="HoverHighlightStyleR"
+                TargetType="Path"
+                BasedOn="{StaticResource BasePathHighlight}">
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ElementName=Remove, Path=IsMouseOver}"
+                        Value="True">
+                        <Setter
+                            Property="Fill"
+                            Value="{StaticResource Blue}" />
+                        <Setter
+                            Property="Stroke"
+                            Value="{StaticResource Blue}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="HoverHighlightStyleA"
+                TargetType="Path"
+                BasedOn="{StaticResource BasePathHighlight}">
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ElementName=Add, Path=IsMouseOver}"
+                        Value="True">
+                        <Setter
+                            Property="Fill"
+                            Value="{StaticResource Blue}" />
+                        <Setter
+                            Property="Stroke"
+                            Value="{StaticResource Blue}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="HoverHighlightStyleS"
+                TargetType="Path"
+                BasedOn="{StaticResource BasePathHighlight}">
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ElementName=Start, Path=IsMouseOver}"
+                        Value="True">
+                        <Setter
+                            Property="Fill"
+                            Value="{StaticResource Green}" />
+                        <Setter
+                            Property="Stroke"
+                            Value="{StaticResource Green}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="FocusHighlightStyle"
+                TargetType="TextBox"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="VerticalAlignment"
+                    Value="Center" />
+                <Setter
+                    Property="TextAlignment"
+                    Value="Center" />
+                <Setter
+                    Property="Background"
+                    Value="Transparent" />
+                <Setter
+                    Property="BorderBrush"
+                    Value="{StaticResource DarkBorder}" />
+                <Setter
+                    Property="BorderThickness"
+                    Value="0,0,0,2" />
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource LightText}" />
+                <Setter
+                    Property="SelectionBrush"
+                    Value="{StaticResource DimText}" />
+                <Setter
+                    Property="SelectionTextBrush"
+                    Value="{StaticResource LightText}" />
+                <Setter
+                    Property="CaretBrush"
+                    Value="{StaticResource Blue}" />
+                <Setter
+                    Property="FontFamily"
+                    Value="{StaticResource DefaultFont}" />
+                <Setter
+                    Property="FontSize"
+                    Value="14" />
+                <Setter
+                    Property="FontWeight"
+                    Value="Bold" />
+                <Setter
+                    Property="Width"
+                    Value="45" />
+                <Setter
+                    Property="Height"
+                    Value="20" />
+                <Setter
+                    Property="Margin"
+                    Value="5,0" />
+                <Setter
+                    Property="InputMethod.IsInputMethodEnabled"
+                    Value="False" />
+                <Setter
+                    Property="ContextMenu"
+                    Value="{x:Null}" />
+                <Setter
+                    Property="IsUndoEnabled"
+                    Value="False" />
+                <Setter
+                    Property="UndoLimit"
+                    Value="1" />
+                <Style.Triggers>
+                    <Trigger
+                        Property="IsFocused"
+                        Value="True">
+                        <Setter
+                            Property="BorderBrush"
+                            Value="{StaticResource Blue}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="TextHighlightStyle"
+                TargetType="TextBlock">
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource LightText}" />
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding ElementName=Save, Path=IsMouseOver}"
+                        Value="True">
+                        <Setter
+                            Property="Foreground"
+                            Value="{StaticResource Blue}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Grid
+            Background="{StaticResource DimBg}"
+            Height="30"
+            VerticalAlignment="Top"
+            ClipToBounds="False"
+            ContextMenuService.Placement="Bottom"
+            x:Name="TITLE">
+            <Grid.ContextMenu>
+                <ContextMenu
+                    x:Name="MENU">
+                    <MenuItem
+                        Header="启用窗口置顶"
+                        x:Name="OnTop">
+                        <MenuItem.Icon>
+                            <Path
+                                Data="M1 12L5 8M2 5L8 11L9 10 9 7 13 3 10 0 6 4 3 4 2 5 8 11"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Stroke="{StaticResource DimText}"
+                                StrokeThickness="2"
+                                IsHitTestVisible="False" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator
+                        Background="{StaticResource DarkBorder}"
+                        Height="2"
+                        Margin="-29,3,1,3" />
+                    <MenuItem
+                        Header="复制仓库链接"
+                        x:Name="Link">
+                        <MenuItem.Icon>
+                            <Path
+                                Data="M3 8L1 10 1 11 4 14 5 14 10 9 10 8 8 6M7 9L5 7 5 6 10 1 11 1 14 4 14 5 12 7"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Stroke="{StaticResource DimText}"
+                                StrokeThickness="2"
+                                IsHitTestVisible="False" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Grid.ContextMenu>
+            <Image
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Width="20"
+                Height="20"
+                Margin="10,2,0,0"
+                Source="/favicon.ico"
+                x:Name="ICON" />
+            <TextBlock
+                Foreground="{StaticResource WhiteText}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="16"
+                TextAlignment="Left"
+                LineHeight="20"
+                LineStackingStrategy="BlockLineHeight"
+                SnapsToDevicePixels="True"
+                UseLayoutRounding="True"
+                Margin="40,6,10,4"
+                IsHitTestVisible="False"
+                Focusable="True"
+                FocusVisualStyle="{x:Null}"
+                x:Name="NULLPART">
+                <Run
+                    Foreground="{StaticResource Blue}"
+                    Text="G" /><Run
+                    Text="ame" />
+                <Run
+                    Foreground="{StaticResource Blue}"
+                    Text="W" /><Run
+                    Text="indow" />
+                <Run
+                    Foreground="{StaticResource Blue}"
+                    Text="C" /><Run
+                    Text="ontrol" />
+                <Run
+                    Foreground="{StaticResource Blue}"
+                    Text="T" /><Run
+                    Text="ool" />
+                <Run
+                    Foreground="{StaticResource DimBorder}"
+                    FontSize="20"
+                    Text="-"
+                    BaselineAlignment="Subscript" />
+                <Run
+                    Foreground="{StaticResource DimText}"
+                    FontSize="12"
+                    Text="作者：FeiLingshu" />
+            </TextBlock>
+            <Border
+                Margin="0,0,1,0"
+                Style="{StaticResource CloseButton}"
+                x:Name="CLOSE">
+                <Path
+                    Data="M0 0L10 10M0 10L10 0"
+                    Style="{StaticResource ButtonPath}" />
+            </Border>
+            <Border
+                Margin="0,0,31,0"
+                Style="{StaticResource OtherButton}"
+                x:Name="MINI">
+                <Path
+                    Data="M0 0L10 0"
+                    Style="{StaticResource ButtonPath}" />
+            </Border>
+            <Border
+                Margin="0,0,61,0"
+                Style="{StaticResource OtherButton}"
+                x:Name="STAT">
+                <Path
+                    Data="M0 0L11 0L11 1L7 5L7 11L6 11L4 9L4 5L0 1L0 0M9 6L11 6M9 8L11 8"
+                    Stroke="{StaticResource Blue}"
+                    Style="{StaticResource ButtonPath}" />
+            </Border>
+            <Grid.Effect>
+                <StaticResource
+                    ResourceKey="HeavyShadow" />
+            </Grid.Effect>
+        </Grid>
+        <Grid
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            Width="300"
+            Margin="0,30,0,0"
+            x:Name="SETTINGS">
+            <Border
+                Background="{StaticResource DarkBg}"
+                BorderBrush="{StaticResource DarkBorder}"
+                BorderThickness="2"
+                Margin="10,10,10,80"
+                CornerRadius="5"
+                x:Name="S">
+                <Grid>
+                    <ListBox
+                        ItemsSource="{Binding SettingEntries}"
+                        Margin="2,2,2,22"
+                        x:Name="SettingList">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Padding="1"
+                                    TextTrimming="CharacterEllipsis"
+                                    Foreground="{StaticResource LightText}">
+                                    <Run
+                                        BaselineAlignment="Center"
+                                        Text="{Binding N}" />
+                                    <TextBlock.ToolTip>
+                                        <ToolTip
+                                            Style="{StaticResource CustomToolTipStyle}"
+                                            Placement="Bottom"
+                                            VerticalOffset="2"
+                                            HorizontalOffset="50">
+                                            <StackPanel
+                                                Orientation="Vertical">
+                                                <TextBlock
+                                                    TextAlignment="Left"
+                                                    Text="{Binding P}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                            </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox
+                        ItemsSource="{Binding SettingEntries}"
+                        Margin="2,2,2,22"
+                        x:Name="LauncherList">
+                        <ListBox.Style>
+                            <Style
+                                TargetType="ListBox"
+                                BasedOn="{StaticResource {x:Type ListBox}}">
+                                <Setter
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ElementName=Launcher, Path=IsChecked}"
+                                        Value="True">
+                                        <Setter
+                                            Property="Visibility"
+                                            Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.Style>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Padding="1"
+                                    TextTrimming="CharacterEllipsis"
+                                    Foreground="{StaticResource LightText}"
+                                    Tag="{Binding P}">
+                                    <Run
+                                        BaselineAlignment="Center"
+                                        Text="{Binding N}" />
+                                    <TextBlock.ToolTip>
+                                        <ToolTip
+                                            Style="{StaticResource CustomToolTipStyle}"
+                                            Placement="Bottom"
+                                            VerticalOffset="2"
+                                            HorizontalOffset="50">
+                                            <StackPanel
+                                                Orientation="Vertical">
+                                                <TextBlock
+                                                    TextAlignment="Left"
+                                                    Text="{Binding P}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Border
+                        HorizontalAlignment="Right"
+                        Background="{StaticResource DarkBg}"
+                        Width="30"
+                        Margin="0,0,0,20"
+                        CornerRadius="0,4,0,0"
+                        Opacity="0.8"
+                        IsHitTestVisible="False"
+                        x:Name="BarMaskS" />
+                    <Border
+                        VerticalAlignment="Bottom"
+                        Background="{StaticResource DarkBorder}"
+                        Height="21"
+                        CornerRadius="0,0,4,4"
+                        Margin="-1,0,-1,-1"
+                        Padding="1,0">
+                        <Border.ToolTip>
+                            <ToolTip
+                                Style="{StaticResource CustomToolTipStyle}"
+                                Placement="Top"
+                                VerticalOffset="2"
+                                HorizontalOffset="-2">
+                                <StackPanel
+                                    Orientation="Vertical">
+                                    <TextBlock
+                                        TextAlignment="Left"
+                                        Margin="0,5">
+                                        <Run
+                                            Foreground="{StaticResource Yellow}"
+                                            Text="由于部分启动器会阻止" /><Run
+                                            Text=" "
+                                            FontSize="7" /><Run
+                                            Foreground="{StaticResource Yellow}"
+                                            Text="CPU" /><Run
+                                            Text=" "
+                                            FontSize="7" /><Run
+                                            Foreground="{StaticResource Yellow}"
+                                            Text="亲和性配置，请使用本程序启动启动器" />
+                                    </TextBlock>
+                                    <Separator
+                                        Background="{StaticResource DarkBorder}" />
+                                    <TextBlock
+                                        Foreground="{StaticResource DimText}"
+                                        TextAlignment="Left"
+                                        Text="步骤：切换至启动器页 - 添加启动器 - 选中 - 点击启动按钮" />
+                                </StackPanel>
+                            </ToolTip>
+                        </Border.ToolTip>
+                        <CheckBox
+                            Margin="10,0,0,0"
+                            x:Name="Launcher"
+                            Style="{StaticResource CustomCheckBoxStyle}">
+                            <Border
+                                Height="20">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Padding="5,3,0,0">
+                                    <Run
+                                        Text="Launcher"
+                                        Foreground="{StaticResource Yellow}" /><Run
+                                        Text="&lt;"
+                                        Foreground="{StaticResource DimBorder}" /><Run
+                                        Text="*"
+                                        BaselineAlignment="Subscript"
+                                        Foreground="{StaticResource Yellow}" /><Run
+                                        Text="&gt;"
+                                        Foreground="{StaticResource DimBorder}" />
+                                </TextBlock>
+                            </Border>
+                        </CheckBox>
+                    </Border>
+                </Grid>
+            </Border>
+            <Grid
+                VerticalAlignment="Bottom"
+                Height="60"
+                Margin="10,0,10,10">
+                <Border
+                    Style="{StaticResource UIButton}"
+                    x:Name="Remove">
+                    <Path
+                        Data="M0 0L10 0"
+                        Style="{StaticResource HoverHighlightStyleR}" />
+                </Border>
+                <Border
+                    Style="{StaticResource UIButton}"
+                    Margin="0,0,35,0"
+                    x:Name="Add">
+                    <Path
+                        Data="M0 5L10 5M5 0L5 10"
+                        Style="{StaticResource HoverHighlightStyleA}" />
+                </Border>
+                <Border
+                    Margin="0,0,80,0"
+                    x:Name="Start">
+                    <Border.Style>
+                        <Style
+                            TargetType="Border"
+                            BasedOn="{StaticResource UIButton}">
+                            <Setter
+                                Property="Background"
+                                Value="{StaticResource DarkBg}" />
+                            <Setter
+                                Property="BorderBrush"
+                                Value="{StaticResource DarkBorder}" />
+                            <Setter
+                                Property="BorderThickness"
+                                Value="2" />
+                            <Style.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding ElementName=Launcher, Path=IsChecked}"
+                                    Value="True">
+                                    <Setter
+                                        Property="Background"
+                                        Value="{StaticResource DarkBorder}" />
+                                    <Setter
+                                        Property="BorderThickness"
+                                        Value="0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Path
+                        Data="M2 2L8 6 2 10 2 2 8 6"
+                        Style="{StaticResource HoverHighlightStyleS}" />
+                </Border>
+                <Border
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    BorderBrush="{StaticResource DarkBorder}"
+                    BorderThickness="2"
+                    CornerRadius="5"
+                    Height="30">
+                    <Grid
+                        Width="120">
+                        <TextBox
+                            HorizontalAlignment="Left"
+                            Text="1920"
+                            x:Name="WidthData"
+                            Style="{StaticResource FocusHighlightStyle}" />
+                        <Path
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Fill="{StaticResource DimText}"
+                            Stroke="{StaticResource DimText}"
+                            StrokeThickness="2"
+                            Data="M 1,1 L 8,8 M 8,1 L 1,8"
+                            IsHitTestVisible="False" />
+                        <TextBox
+                            HorizontalAlignment="Right"
+                            Text="1080"
+                            x:Name="HeightData"
+                            Style="{StaticResource FocusHighlightStyle}" />
+                    </Grid>
+                </Border>
+                <CheckBox
+                    Margin="0,0,0,2"
+                    x:Name="CPUCore"
+                    Style="{StaticResource CustomCheckBoxStyle}">
+                    <Border
+                        Height="20">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            TextAlignment="Center"
+                            Padding="5,2,0,0"
+                            Style="{StaticResource EnabledStyle}">
+                            <Run
+                                Text="配置" /><Run
+                                Text=" "
+                                FontSize="7" /><Run
+                                Text="CPU" /><Run
+                                Text=" "
+                                FontSize="7" /><Run
+                                Text="亲和性" />
+                        </TextBlock>
+                    </Border>
+                </CheckBox>
+                <Border
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Background="{StaticResource DimBg}"
+                    BorderBrush="{StaticResource DarkBorder}"
+                    BorderThickness="2"
+                    Width="110"
+                    Height="25"
+                    CornerRadius="5"
+                    x:Name="Save">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        TextAlignment="Center"
+                        Text="推送配置数据"
+                        IsHitTestVisible="False"
+                        Style="{StaticResource TextHighlightStyle}" />
+                </Border>
+            </Grid>
+            <Grid.Effect>
+                <StaticResource
+                    ResourceKey="HeavyShadow" />
+            </Grid.Effect>
+        </Grid>
+        <Grid
+            Background="Transparent"
+            Width="500"
+            Margin="300,30,0,0"
+            x:Name="LOGS">
+            <Border
+                Background="{StaticResource DarkBg}"
+                BorderBrush="{StaticResource DarkBorder}"
+                BorderThickness="2"
+                Margin="10"
+                CornerRadius="5"
+                x:Name="L">
+                <Grid>
+                    <ListBox
+                        ItemsSource="{Binding LogEntries}"
+                        Margin="2,2,2,22"
+                        x:Name="LogList">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Padding="1"
+                                    TextWrapping="Wrap"
+                                    Foreground="{StaticResource WhiteText}">
+                                    <Run
+                                        BaselineAlignment="TextBottom"
+                                        Text="{Binding Type}"
+                                        Foreground="{StaticResource Blue}" />
+                                    <Run
+                                        BaselineAlignment="TextBottom"
+                                        Text="|"
+                                        Foreground="{StaticResource DimBorder}" />
+                                    <Run
+                                        BaselineAlignment="TextBottom"
+                                        Text="{Binding Error}"
+                                        Foreground="{StaticResource Red}" /><Run
+                                        BaselineAlignment="TextBottom"
+                                        Text="{Binding Warning}"
+                                        Foreground="{StaticResource Yellow}" /><Run
+                                        BaselineAlignment="TextBottom"
+                                        Text="{Binding Message}"
+                                        Foreground="{StaticResource LightText}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Border
+                        HorizontalAlignment="Right"
+                        Background="{StaticResource DarkBg}"
+                        Width="30"
+                        Margin="0,0,0,20"
+                        CornerRadius="0,4,0,0"
+                        Opacity="0.8"
+                        IsHitTestVisible="False"
+                        x:Name="BarMaskL" />
+                    <Border
+                        VerticalAlignment="Bottom"
+                        Background="{StaticResource DarkBorder}"
+                        Height="21"
+                        CornerRadius="0,0,4,4"
+                        Margin="-1,0,-1,-1"
+                        Padding="1,0,1,1">
+                        <Border.ToolTip>
+                            <ToolTip
+                                Style="{StaticResource CustomToolTipStyle}"
+                                Placement="Top"
+                                VerticalOffset="2"
+                                HorizontalOffset="-2">
+                                <StackPanel
+                                    Orientation="Vertical">
+                                    <TextBlock
+                                        Foreground="{StaticResource Red}"
+                                        TextAlignment="Left"
+                                        Margin="0,5"
+                                        Text="并非所有任务都处于活动状态，超出最大值是允许的" />
+                                    <Separator
+                                        Background="{StaticResource DarkBorder}" />
+                                    <TextBlock
+                                        Foreground="{StaticResource DimText}"
+                                        TextAlignment="Left"
+                                        Text="可用数量不足可能导致任务延迟" />
+                                </StackPanel>
+                            </ToolTip>
+                        </Border.ToolTip>
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            TextAlignment="Left"
+                            Foreground="{StaticResource LightText}"
+                            Margin="10,0,0,0"
+                            IsHitTestVisible="False">
+                            <Run
+                                Text="Task任务：" /><Run
+                                Foreground="{StaticResource Green}"
+                                Text="0"
+                                x:Name="TASK" /><Run
+                                Text="  |  "
+                                Foreground="{StaticResource DimText}"
+                                FontSize="10"
+                                BaselineAlignment="Center" /><Run
+                                Text="可用：" /><Run
+                                Foreground="{StaticResource Green}"
+                                Text="0"
+                                x:Name="TASKFREE" /><Run
+                                Text="  |  "
+                                Foreground="{StaticResource DimText}"
+                                FontSize="10"
+                                BaselineAlignment="Center" /><Run
+                                Text="最新任务ID：" /><Run
+                                Text="0"
+                                Foreground="{StaticResource Blue}"
+                                x:Name="LAST" />
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Border>
+            <Grid.Effect>
+                <StaticResource
+                    ResourceKey="HeavyShadow" />
+            </Grid.Effect>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,227 @@
+﻿<Application
+    x:Class="GWCT.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:GWCT"
+    Startup="Application_Startup"
+    ShutdownMode="OnExplicitShutdown">
+    <Application.Resources>
+        <SolidColorBrush
+            x:Key="Green"
+            Color="#FF6CCB7B" />
+        <SolidColorBrush
+            x:Key="Yellow"
+            Color="#FFFFB900" />
+        <SolidColorBrush
+            x:Key="Red"
+            Color="#FFE81123" />
+        <SolidColorBrush
+            x:Key="Blue"
+            Color="#FF60CDFF" />
+        <SolidColorBrush
+            x:Key="DarkBg"
+            Color="#FF202020" />
+        <SolidColorBrush
+            x:Key="DimBg"
+            Color="#FF303030" />
+        <SolidColorBrush
+            x:Key="LightBg"
+            Color="#FF9E9E9E" />
+        <SolidColorBrush
+            x:Key="DarkBorder"
+            Color="#FF404040" />
+        <SolidColorBrush
+            x:Key="DimBorder"
+            Color="#FF606060" />
+        <SolidColorBrush
+            x:Key="DimText"
+            Color="#FF808080" />
+        <SolidColorBrush
+            x:Key="LightText"
+            Color="#FFC0C0C0" />
+        <SolidColorBrush
+            x:Key="WhiteText"
+            Color="#FFF0F0F0" />
+        <FontFamily
+            x:Key="DefaultFont">Consolas, Microsoft YaHei</FontFamily>
+        <DropShadowEffect
+            x:Key="PerformanceShadow"
+            BlurRadius="8"
+            Color="#FF000000"
+            Direction="270"
+            Opacity="0.8"
+            RenderingBias="Performance"
+            ShadowDepth="1" />
+        <DropShadowEffect
+            x:Key="HeavyShadow"
+            BlurRadius="10"
+            Color="#FF000000"
+            Direction="270"
+            Opacity="0.5"
+            RenderingBias="Performance"
+            ShadowDepth="1" />
+        <WindowChrome
+            x:Key="WindowChromeStyle"
+            CaptionHeight="0"
+            UseAeroCaptionButtons="False"
+            NonClientFrameEdges="None"
+            GlassFrameThickness="0,1,0,0"
+            ResizeBorderThickness="0"
+            CornerRadius="0" />
+        <Style
+            x:Key="WindowStyle"
+            TargetType="Window">
+            <Setter
+                Property="FontFamily"
+                Value="{StaticResource DefaultFont}" />
+            <Setter
+                Property="FontSize"
+                Value="14" />
+            <Setter
+                Property="FontWeight"
+                Value="Bold" />
+            <Setter
+                Property="Width"
+                Value="800" />
+            <Setter
+                Property="Height"
+                Value="400" />
+            <Setter
+                Property="ResizeMode"
+                Value="CanMinimize" />
+            <Setter
+                Property="Background"
+                Value="{StaticResource DarkBg}" />
+            <Setter
+                Property="Icon"
+                Value="/favicon.ico" />
+            <Setter
+                Property="KeyboardNavigation.TabNavigation"
+                Value="None" />
+            <Setter
+                Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        </Style>
+        <Style
+            x:Key="CloseButton"
+            TargetType="Border">
+            <Setter
+                Property="Width"
+                Value="30" />
+            <Setter
+                Property="HorizontalAlignment"
+                Value="Right" />
+            <Setter
+                Property="Background"
+                Value="#00C42B1C" />
+            <Style.Triggers>
+                <EventTrigger
+                    RoutedEvent="Mouse.MouseEnter">
+                    <BeginStoryboard
+                        HandoffBehavior="SnapshotAndReplace">
+                        <Storyboard
+                            FillBehavior="HoldEnd">
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                To="#FFC42B1C"
+                                Duration="0:0:0.1">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase
+                                        EasingMode="EaseInOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger
+                    RoutedEvent="Mouse.MouseLeave">
+                    <BeginStoryboard
+                        HandoffBehavior="SnapshotAndReplace">
+                        <Storyboard
+                            FillBehavior="HoldEnd">
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                To="#00C42B1C"
+                                Duration="0:0:0.1">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase
+                                        EasingMode="EaseInOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style
+            x:Key="OtherButton"
+            TargetType="Border">
+            <Setter
+                Property="Width"
+                Value="30" />
+            <Setter
+                Property="HorizontalAlignment"
+                Value="Right" />
+            <Setter
+                Property="Background"
+                Value="#003D3D3D" />
+            <Style.Triggers>
+                <EventTrigger
+                    RoutedEvent="Mouse.MouseEnter">
+                    <BeginStoryboard
+                        HandoffBehavior="SnapshotAndReplace">
+                        <Storyboard
+                            FillBehavior="HoldEnd">
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                To="#FF3D3D3D"
+                                Duration="0:0:0.1">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase
+                                        EasingMode="EaseInOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger
+                    RoutedEvent="Mouse.MouseLeave">
+                    <BeginStoryboard
+                        HandoffBehavior="SnapshotAndReplace">
+                        <Storyboard
+                            FillBehavior="HoldEnd">
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                To="#003D3D3D"
+                                Duration="0:0:0.1">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase
+                                        EasingMode="EaseInOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style
+            x:Key="ButtonPath"
+            TargetType="Path">
+            <Setter
+                Property="HorizontalAlignment"
+                Value="Center" />
+            <Setter
+                Property="VerticalAlignment"
+                Value="Center" />
+            <Setter
+                Property="Stroke"
+                Value="{StaticResource WhiteText}" />
+            <Setter
+                Property="StrokeThickness"
+                Value="1" />
+            <Setter
+                Property="IsHitTestVisible"
+                Value="False" />
+        </Style>
+    </Application.Resources>
+</Application>

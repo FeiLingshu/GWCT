@@ -1,0 +1,16 @@
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\bin\Release\GWCT.exe.config
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\bin\Release\GWCT.exe
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\bin\Release\GWCT.pdb
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\GWCT.csproj.AssemblyReference.cache
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\MainWindow.g.cs
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\App.g.cs
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\GWCT_MarkupCompile.cache
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\GWCT_MarkupCompile.lref
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\App.baml
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\MainWindow.baml
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\GWCT.g.resources
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\GWCT.csproj.CoreCompileInputs.cache
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\GWCT.exe
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\GWCT.pdb
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\Notify.g.cs
+C:\FeiLingshu\Desktop\Temp\GWCT\GWCT\obj\Release\Notify.baml
