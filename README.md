@@ -74,7 +74,7 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
 
 > [!NOTE]
 > __[`[4.8.3.2]`](https://github.com/FeiLingshu/GWCT/releases/tag/v4.8.3.2) 添加了一个新功能__
-> - __允许主动临时暂停某配置项捕获 (仅当前运行过程中有效)__
+> - __允许主动临时暂停某配置项捕获 (仅当前运行过程中有效) (无需推送，立即生效)__
 > - __在对应列表项中按下鼠标右键即可触发__
 
 > [!TIP]
