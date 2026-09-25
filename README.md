@@ -5,9 +5,7 @@
 const var Repositories = "https://github.com/FeiLingshu/GWCT";
 ```
 
-<video src="https://github.com/FeiLingshu/GWCT/raw/refs/heads/main/video.mp4" controls>
-
-</video>
+[video.webm](https://github.com/user-attachments/assets/530e16d0-10d6-45a5-bd5f-1b528e09e6c3)
 
 #
 
