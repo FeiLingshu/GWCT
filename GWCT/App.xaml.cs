@@ -68,7 +68,7 @@ namespace GWCT
         /// <summary>
         /// 静态主版本号
         /// </summary>
-        public static readonly Version MainVersion = new Version(4, 8, 3, 1);
+        public static readonly Version MainVersion = new Version(4, 8, 3, 2);
 
         /// <summary>
         /// 全局计时器
@@ -112,9 +112,12 @@ namespace GWCT
             window.ShowDialog();
             window_isclosed = true;
             window.bin?.Writestat(SelfTimer.Elapsed);
-            window.procmgr?.WaitForExit(1000);
-            window.TaskWatcher?.Wait(1000);
-            this.Shutdown();
+            Task.Factory.StartNew(() =>
+            {
+                window.procmgr?.WaitForExit(2000);
+                window.TaskWatcher?.Wait(2000);
+                this.Dispatcher.Invoke(() => this.Shutdown());
+            }, TaskCreationOptions.LongRunning);
         }
 
         /// <summary>
@@ -190,18 +193,20 @@ namespace GWCT
             }
             try
             {
-                if (window != null && !window_isclosed)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    window.Close();
-                }
+                    if (window != null && !window_isclosed) window.Close();
+                    Popup(errorinfo.ToString(), MessageBoxImage.Error);
+                    window?.procmgr?.WaitForExit(2000);
+                    window?.TaskWatcher?.Wait(2000);
+                });
             }
             catch (Exception) { }
-            Popup(errorinfo.ToString(), MessageBoxImage.Error);
-            this.Shutdown();
+            finally { Environment.Exit(0); }
         }
 
 
-        
+
         /// <summary>
         /// 调用系统提示窗口
         /// </summary>

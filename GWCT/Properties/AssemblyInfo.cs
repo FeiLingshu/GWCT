@@ -48,6 +48,6 @@ using System.Windows;
 //      修订号
 //
 [assembly: AssemblyVersion("4.8.0.0")]
-[assembly: AssemblyFileVersion("3.1.0.0")]
+[assembly: AssemblyFileVersion("3.2.0.0")]
 [assembly: Guid("1B1FBA27-60A8-4F8B-B107-73EA7DA0CE56")]
 [assembly: NeutralResourcesLanguage("zh-Hans")]

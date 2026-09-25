@@ -123,6 +123,7 @@ namespace GWCT
             }
             this.MouseLeftButtonUp += KillFocus;
             // UI数据更新
+            this.SettingList.MouseRightButtonUp += PauseTag;
             this.Add.MouseLeftButtonUp += AddSetting;
             this.Remove.MouseLeftButtonUp += RemoveSetting;
             this.Start.MouseLeftButtonUp += StartLauncher;
@@ -227,6 +228,25 @@ namespace GWCT
         /// 存储 <see cref="Logs"/> 组件实例 (日志)
         /// </summary>
         private readonly Logs logs = null;
+
+        private void PauseTag(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is TextBlock item && SettingList.SelectedIndex != -1 && item.Tag as string == (SettingList.SelectedItem as SettingEntry).P)
+            {
+                if (item.Text.StartsWith("*"))
+                {
+                    ChangePause(settings.Get(SettingList.SelectedIndex), false);
+                    item.Text = item.Text.Substring(1);
+                    item.Foreground = Application.Current.Resources["LightText"] as SolidColorBrush;
+                }
+                else
+                {
+                    ChangePause(settings.Get(SettingList.SelectedIndex), true);
+                    item.Text = $"*{item.Text}";
+                    item.Foreground = Application.Current.Resources["DimText"] as SolidColorBrush;
+                }
+            }
+        }
 
         /// <summary>
         /// 添加配置
@@ -366,7 +386,7 @@ namespace GWCT
             {
                 TaskCount.Add(out long tidvalue);
                 await Task.Delay(1000); // 等待自身进程初始化
-                await procmgr.WriteValues(bin.PATHS.ToArray(), bin.BINDATA.SET_1, bin.BINDATA.SET_2, bin.BINDATA.SET_3);
+                procmgr.WriteValues(bin.PATHS.ToArray(), bin.BINDATA.SET_1, bin.BINDATA.SET_2, bin.BINDATA.SET_3);
                 short report = Core.GetCoreMap(out bool is_override);
                 this.CPUCore.IsEnabled = true;
                 if (report == 0)
@@ -414,6 +434,11 @@ namespace GWCT
                 TaskCount.Release(tidvalue);
             }
             warking();
+        }
+
+        private void ChangePause(string path, bool add)
+        {
+            procmgr.WritePause(path, add);
         }
 
         /// <summary>
@@ -473,6 +498,7 @@ namespace GWCT
                 if (index != -1)
                 {
                     string filepath = settings.Get(index);
+                    ChangePause(filepath, false);
                     settings.Remove(index);
                     bin.PATHS.Remove(filepath);
                 }
@@ -557,7 +583,7 @@ namespace GWCT
         private void Save2bin()
         {
             bin.SetData();
-            procmgr.WriteValues(bin.PATHS.ToArray(), bin.BINDATA.SET_1, bin.BINDATA.SET_2, bin.BINDATA.SET_3).Wait();
+            procmgr.WriteValues(bin.PATHS.ToArray(), bin.BINDATA.SET_1, bin.BINDATA.SET_2, bin.BINDATA.SET_3);
             PrintLog("配置数据已更新 (GWCT.bin)", false);
         }
 

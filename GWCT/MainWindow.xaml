@@ -121,7 +121,20 @@
                 BasedOn="{StaticResource {x:Type Control}}">
                 <Setter
                     Property="Padding"
-                    Value="5,2" />
+                    Value="0" />
+            </Style>
+            <Style
+                x:Key="ListBoxItem"
+                TargetType="TextBlock">
+                <Setter
+                    Property="VerticalAlignment"
+                    Value="Center" />
+                <Setter
+                    Property="Padding"
+                    Value="6,3" />
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource LightText}" />
             </Style>
             <Style
                 x:Key="TextBase"
@@ -680,13 +693,10 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock
-                                    VerticalAlignment="Center"
-                                    Padding="1"
                                     TextTrimming="CharacterEllipsis"
-                                    Foreground="{StaticResource LightText}">
-                                    <Run
-                                        BaselineAlignment="Center"
-                                        Text="{Binding N}" />
+                                    Text="{Binding N}"
+                                    Tag="{Binding P}"
+                                    Style="{StaticResource ListBoxItem}">
                                     <TextBlock.ToolTip>
                                         <ToolTip
                                             Style="{StaticResource CustomToolTipStyle}"
@@ -730,14 +740,10 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock
-                                    VerticalAlignment="Center"
-                                    Padding="1"
                                     TextTrimming="CharacterEllipsis"
-                                    Foreground="{StaticResource LightText}"
-                                    Tag="{Binding P}">
-                                    <Run
-                                        BaselineAlignment="Center"
-                                        Text="{Binding N}" />
+                                    Text="{Binding N}"
+                                    Tag="{Binding P}"
+                                    Style="{StaticResource ListBoxItem}">
                                     <TextBlock.ToolTip>
                                         <ToolTip
                                             Style="{StaticResource CustomToolTipStyle}"
@@ -980,10 +986,8 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock
-                                    VerticalAlignment="Center"
-                                    Padding="1"
                                     TextWrapping="Wrap"
-                                    Foreground="{StaticResource WhiteText}">
+                                    Style="{StaticResource ListBoxItem}">
                                     <Run
                                         BaselineAlignment="TextBottom"
                                         Text="{Binding Type}"
