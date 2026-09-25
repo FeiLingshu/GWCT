@@ -72,7 +72,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(Configuration)" == "Release" (
-  "$(SolutionDir)..\zopfli\zopfli.exe" --deflate --t0 --bsr55 --pass2 --i64 --mui64 --sb512 --all "$(TargetPath)"
+  "$(SolutionDir)..\zopfli\zopfli.exe" --deflate --t0 --bsr32 --pass2 --i256 --mui256 --sb512 --all "$(TargetPath)"
   if exist "$(TargetPath).deflate" (
     move /Y "$(TargetPath).deflate" "$(SolutionDir)$(TargetFileName).deflate"
   )

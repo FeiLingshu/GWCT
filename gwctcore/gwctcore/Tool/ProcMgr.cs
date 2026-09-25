@@ -64,6 +64,11 @@ namespace GWCT.Tool
         private bool CoreFlag;
 
         /// <summary>
+        /// 全局暂停列表
+        /// </summary>
+        private readonly HashSet<string> Pause = new HashSet<string>(64);
+
+        /// <summary>
         /// 数据读写同步组件
         /// </summary>
         private readonly SemaphoreSlim ValueLock = new SemaphoreSlim(1, 1);
@@ -75,16 +80,31 @@ namespace GWCT.Tool
         /// <param name="height">窗口高度信息</param>
         /// <param name="coreflag">核心亲和性标志</param>
         /// <returns>返回异步方法实例</returns>
-        public async Task WriteValues(string[] paths, ushort width, ushort height, bool coreflag)
+        public void WriteValues(string[] paths, ushort width, ushort height, bool coreflag)
         {
             TaskCount.Add(out long tidvalue);
-            await ValueLock.WaitAsync();
+            ValueLock.Wait();
             Paths = paths;
             Width = width;
             Height = height;
             CoreFlag = coreflag;
             ValueLock.Release();
             TaskCount.Release(tidvalue);
+        }
+        /// <summary>
+        /// 向内部字段中写入暂停标志
+        /// </summary>
+        /// <param name="path">目标路径</param>
+        /// <param name="add">是否为添加</param>
+        /// <returns>返回是否执行了实际操作</returns>
+        public bool WritePause(string path, bool add)
+        {
+            ValueLock.Wait();
+            try
+            {
+                return add ? Pause.Add(path) : Pause.Remove(path);
+            }
+            finally { ValueLock.Release(); }
         }
 
         /// <summary>
@@ -113,6 +133,12 @@ namespace GWCT.Tool
                     await ProcFlagLock.WaitAsync();
                     for (int i = 0; i < paths.Length; i++)
                     {
+                        await ValueLock.WaitAsync();
+                        try
+                        {
+                            if (Pause.Contains(paths[i])) continue;
+                        }
+                        finally { ValueLock.Release(); }
                         if (!ProcFlag.Contains(paths[i])) indexpool.Add(i);
                     }
                     ProcFlagLock.Release();

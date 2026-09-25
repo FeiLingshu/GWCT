@@ -1379,6 +1379,11 @@
             保存核心亲和性标志
             </summary>
         </member>
+        <member name="F:GWCT.Tool.ProcMgr.Pause">
+            <summary>
+            全局暂停列表
+            </summary>
+        </member>
         <member name="F:GWCT.Tool.ProcMgr.ValueLock">
             <summary>
             数据读写同步组件
@@ -1393,6 +1398,14 @@
             <param name="height">窗口高度信息</param>
             <param name="coreflag">核心亲和性标志</param>
             <returns>返回异步方法实例</returns>
+        </member>
+        <member name="M:GWCT.Tool.ProcMgr.WritePause(System.String,System.Boolean)">
+            <summary>
+            向内部字段中写入暂停标志
+            </summary>
+            <param name="path">目标路径</param>
+            <param name="add">是否为添加</param>
+            <returns>返回是否执行了实际操作</returns>
         </member>
         <member name="M:GWCT.Tool.ProcMgr.Work">
             <summary>
