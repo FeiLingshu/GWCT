@@ -5,20 +5,9 @@
 const var Repositories = "https://github.com/FeiLingshu/GWCT";
 ```
 
-[video.webm](https://github.com/user-attachments/assets/530e16d0-10d6-45a5-bd5f-1b528e09e6c3)
+[GWCT](https://github.com/user-attachments/assets/530e16d0-10d6-45a5-bd5f-1b528e09e6c3)
 
-#
-
-<blockquote>
-  <div align="Left">
-    <picture>
-      <source srcset="https://raw.giteeusercontent.com/FeiLingshu/GWCT_mirror/raw/master/EFFECT.png" type="image/png"/>
-      <source srcset="./EFFECT.webp" type="image/webp"/>
-      <img src="" alt="UI Effect" />
-    </picture>
-  </div>
-  <strong>&nbsp;&nbsp;&nbsp;UI 效果图 *</strong>
-</blockquote>
+- __UI 效果图：[国区](https://raw.giteeusercontent.com/FeiLingshu/GWCT_mirror/raw/master/EFFECT.png) [外网](./EFFECT.webp)__
 
 <a id="warn"></a>
 
