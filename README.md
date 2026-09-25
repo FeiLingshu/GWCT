@@ -1,10 +1,3 @@
-```C#
-╭─╴╭─╮╭┬╮╭─╴   ╷ ╷╷╭╮╷╶┬╮╭─╮╷ ╷   ╭─╴╭─╮╭╮╷╶┬╴╭─╮╭─╮╷     ╶┬╴╭─╮╭─╮╷  
-│╶╮├─┤│││├╴    │╷│││╰┤ │││ ││╷│   │  │ ││╰┤ │ ├┬╯│ ││      │ │ ││ ││  
-╰─╯╵ ╵╵ ╵╰─╴   ╰┴╯╵╵ ╵╶┴╯╰─╯╰┴╯   ╰─╴╰─╯╵ ╵ ╵ ╵╰╴╰─╯╰─╴    ╵ ╰─╯╰─╯╰─╴
-const var Repositories = "https://github.com/FeiLingshu/GWCT";
-```
-
 [GWCT_video](https://github.com/user-attachments/assets/e7c1c664-da0f-4ec1-b39c-d523a9eaf8eb)
 
 
