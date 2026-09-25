@@ -1,5 +1,6 @@
 [GWCT_video](https://github.com/user-attachments/assets/e7c1c664-da0f-4ec1-b39c-d523a9eaf8eb)
 
+- __视频加载慢可以 [前往这里](https://www.bilibili.com/video/BV1hfhJ6pEnQ) 观看__
 - __UI 效果图：[国区](https://raw.giteeusercontent.com/FeiLingshu/GWCT_mirror/raw/master/EFFECT.png) [外网](https://raw.githubusercontent.com/FeiLingshu/GWCT/refs/heads/main/EFFECT.webp)__
 
 <a id="warn"></a>
