@@ -25,13 +25,13 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100ade4a76802241de71f5bc96986bb265d675562e388c3eb234667df86face1485948aab7587f35669c8811b6c4194c09152270bd20efda25e75e118eb350ca024bc31a12c28b17d79ca11b2f177240d663253f6db3badf5a16459a4c036e0272a0fe267d7eb5406cde63e394e5847faa2cb2be4c2617aab66b103c2925d7477d1
   · 哈希算法：SHA1
-  · 文件大小：90,624 字节
+  · 文件大小：91,648 字节
 核心组件信息 (模块已强签名) (已内嵌)
   · 名称：gwctcore
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100855eedd84aa057d4da04401201bd55074332c0e6f9d8b882c8fb74005051af68844d51b21851a399392dc3fb5b1e9b9857aade696ff006cb81c106c7aa964253b455236eef5c2bd633633d72738e474b8731d51efe64e15436d401e1008dc73757a72e67170d9e0975c1ef036485bb2526a96b6d190efc65cf2729731d54dbb4
   · 哈希算法：SHA1
-  · 文件大小：23,691 字节 (已压缩，原始大小：52,224 字节)
+  · 文件大小：23,642 字节 (已压缩，原始大小：52,224 字节)
 ```
 
 ---
@@ -71,6 +71,11 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
 - [x] __提供运行统计__
 - [x] __自动更新检查__
 
+> [!NOTE]
+> __[`[4.8.3.2]`](https://github.com/FeiLingshu/GWCT/releases/tag/v4.8.3.2) 添加了一个新功能__
+> - __允许主动临时暂停某配置项捕获 (仅当前运行过程中有效)__
+> - __在对应列表项中按下鼠标右键即可触发__
+
 > [!TIP]
 > - ___程序会尝试检查游戏窗口是否支持调整，若不支持则会主动忽略___
 > - ___检测到运行过程中频繁重置窗口大小时，核心功能将会熔断，避免频繁触发重置造成系统卡顿 (点名批评地平线6)___
@@ -82,7 +87,7 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
 
 > __程序性能表现良好__
 
-- [x] __单文件运行，极小包体 ( `88.5KB` )__
+- [x] __单文件运行，极小包体 ( `89.5KB` )__
 - ___由于编译器将 `FileAlignment` 设置为 `0x200(512)` ，程序集编译后不足 `0.5KB` 的节区会使用空数据填充，作者已经尽力减小程序集体积，目前包体大小已高度优化___
 - [x] __运行过程中仅会引入极少的性能开销，自身会配置效能模式 (不受支持时会退化成低进程优先级模式)__
 - [x] __使用自开发 `ProcMgr` 组件，实现高速低开销进程快照和筛选__
@@ -104,7 +109,7 @@ const var Repositories = "https://github.com/FeiLingshu/GWCT";
 > - __该功能会对程序执行基于声誉的安全检查__
 > - __由于本程序没有购买数字证书，且不是通过 `Microsoft Store` 分发的，导致其可能无法通过 `SmartScreen` 的安全检测__
 > - __程序本身是安全的，出现 `SmartScreen` 警告时，请手动忽略__
->> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/2adcfd8833698112f27441cf63e46f6b3f88121058796ac2140e67e22d6aeebc)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/398d15a9753861dd5e9a7ad56ad8f49f550788fca7ea435a25b023b742a7c41c)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
+>> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/7467c286665ac62dc00c28ed3a64be3932ac5c56b967c5cd765001d606ce0825)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/c36ed1786ebb5630f438745c371cad5a235c5984c8ab2f197cc9dc760968d4e2)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
 >> - __请注意，报告中行为分析中的风险项并非真正存在风险，其中部分为实现功能所必须的行为，部分为 `.Net` 框架底层的自发行为__
 >> - __如有疑问，可自行查看源代码进行分析，作者从未在程序中植入恶意代码，可放心使用__
 
