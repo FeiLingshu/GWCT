@@ -5,3 +5,10 @@ C:\FeiLingshu\Desktop\Temp\GWCT\gwctcore\gwctcore\bin\Debug\gwctcore.pdb
 C:\FeiLingshu\Desktop\Temp\GWCT\gwctcore\gwctcore\obj\Debug\gwctcore.dll
 C:\FeiLingshu\Desktop\Temp\GWCT\gwctcore\gwctcore\obj\Debug\gwctcore.pdb
 C:\FeiLingshu\Desktop\Temp\GWCT\gwctcore\gwctcore\bin\Debug\gwctcore.xml
+C:\FeiLingshu\Desktop\GWCT\gwctcore\gwctcore\bin\Debug\gwctcore.xml
+C:\FeiLingshu\Desktop\GWCT\gwctcore\gwctcore\bin\Debug\gwctcore.dll
+C:\FeiLingshu\Desktop\GWCT\gwctcore\gwctcore\bin\Debug\gwctcore.pdb
+C:\FeiLingshu\Desktop\GWCT\gwctcore\gwctcore\obj\Debug\gwctcore.csproj.AssemblyReference.cache
+C:\FeiLingshu\Desktop\GWCT\gwctcore\gwctcore\obj\Debug\gwctcore.csproj.CoreCompileInputs.cache
+C:\FeiLingshu\Desktop\GWCT\gwctcore\gwctcore\obj\Debug\gwctcore.dll
+C:\FeiLingshu\Desktop\GWCT\gwctcore\gwctcore\obj\Debug\gwctcore.pdb

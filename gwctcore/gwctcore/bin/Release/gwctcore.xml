@@ -1776,14 +1776,16 @@
             数据读取同步器
             </summary>
         </member>
-        <member name="M:GWCT.Tool.WinCtrl.Add(System.IntPtr,System.String,System.Int32,System.Int32)">
+        <member name="M:GWCT.Tool.WinCtrl.Add(System.IntPtr,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             向列表添加数据
             </summary>
             <param name="window">目标窗口句柄</param>
-            <param name="pname">目标进程名称</param>
+            <param name="path">目标进程路径</param>
             <param name="width">目标窗口宽度</param>
             <param name="height">目标窗口高度</param>
+            <param name="offsetx">[<see langword="隐藏"/>] 左上角水平偏移量</param>
+            <param name="offsety">[<see langword="隐藏"/>] 左上角垂直偏移量</param>
             <returns>返回异步方法实例</returns>
             <exception cref="T:System.ComponentModel.Win32Exception">出现 <see cref="T:System.ComponentModel.Win32Exception"/> 错误</exception>
         </member>

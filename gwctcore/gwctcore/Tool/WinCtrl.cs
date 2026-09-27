@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -581,14 +582,32 @@ namespace GWCT.Tool
         /// 向列表添加数据
         /// </summary>
         /// <param name="window">目标窗口句柄</param>
-        /// <param name="pname">目标进程名称</param>
+        /// <param name="path">目标进程路径</param>
         /// <param name="width">目标窗口宽度</param>
         /// <param name="height">目标窗口高度</param>
+        /// <param name="offsetx">[<see langword="隐藏"/>] 左上角水平偏移量</param>
+        /// <param name="offsety">[<see langword="隐藏"/>] 左上角垂直偏移量</param>
         /// <returns>返回异步方法实例</returns>
         /// <exception cref="Win32Exception">出现 <see cref="Win32Exception"/> 错误</exception>
-        internal async Task<bool> Add(IntPtr window, string pname, int width, int height)
+        internal async Task<bool> Add(IntPtr window, string path, int width, int height, int offsetx = 0, int offsety = 0)
         {
             TaskCount.Add(out long tidvalue);
+            // 初始化数据
+            string pname = Path.GetFileName(path);
+            string ucfg = $"{Path.GetDirectoryName(path)}\\GWCT.config";
+            bool user = false;
+            if (File.Exists(ucfg))
+            {
+                string[] cfg = File.ReadAllText(ucfg, Cfg.Bin.UTF8).Trim().Split(',');
+                if (cfg.Length == 4 && ushort.TryParse(cfg[0], out ushort x) && ushort.TryParse(cfg[1], out ushort y) && ushort.TryParse(cfg[2], out ushort w) && ushort.TryParse(cfg[3], out ushort h))
+                {
+                    offsetx = x;
+                    offsety = y;
+                    width = w;
+                    height = h;
+                    user = true;
+                }
+            }
             // 计算数据
             RECT Screen = GetScreen();
             bool report = true;
@@ -611,10 +630,26 @@ namespace GWCT.Tool
             };
             width += border.Left + border.Right;
             height += border.Top + border.Bottom;
-            if (width > Screen.Width) width = Screen.Width;
-            if (height > Screen.Height) height = Screen.Height;
-            int offsetx = Screen.X + (Screen.Width - width) / 2;
-            int offsety = Screen.Y + (Screen.Height - height) * 2 / 3;
+            if (user)
+            {
+                offsetx += Screen.X;
+                offsety += Screen.Y;
+                int right = Screen.Right - border.Left - border.Right;
+                int bottom = Screen.Bottom - border.Top - border.Bottom;
+                if (offsetx > right) offsetx = right;
+                if (offsety > bottom) offsety = bottom;
+                int maxwidth = Screen.Width - offsetx;
+                int maxheight = Screen.Height - offsety;
+                if (width > maxwidth) width = maxwidth;
+                if (height > maxheight) height = maxheight;
+            }
+            else
+            {
+                if (width > Screen.Width) width = Screen.Width;
+                if (height > Screen.Height) height = Screen.Height;
+                offsetx = Screen.X + (Screen.Width - width) / 2;
+                offsety = Screen.Y + (Screen.Height - height) * 2 / 3;
+            }
             RECT rect = new RECT()
             {
                 Left = offsetx,

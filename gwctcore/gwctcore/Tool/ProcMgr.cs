@@ -320,7 +320,7 @@ namespace GWCT.Tool
                                             bool winctrlreport = false;
                                             try
                                             {
-                                                winctrlreport = await winctrl.Add(window, pname, w, h);
+                                                winctrlreport = await winctrl.Add(window, path, w, h);
                                             }
                                             catch (Win32Exception)
                                             {
