@@ -1,4 +1,4 @@
-[GWCT_video](https://github.com/user-attachments/assets/e7c1c664-da0f-4ec1-b39c-d523a9eaf8eb)
+[video.webm](https://github.com/user-attachments/assets/e87f114a-c40d-4055-bac0-7dea810fe703)
 
 - __视频加载慢可以 [前往这里](https://www.bilibili.com/video/BV1hfhJ6pEnQ) 观看__
 - __UI 效果图：[国区](https://raw.giteeusercontent.com/FeiLingshu/GWCT_mirror/raw/master/EFFECT.png) [外网](https://raw.githubusercontent.com/FeiLingshu/GWCT/refs/heads/main/EFFECT.webp)__
@@ -19,13 +19,13 @@
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100ade4a76802241de71f5bc96986bb265d675562e388c3eb234667df86face1485948aab7587f35669c8811b6c4194c09152270bd20efda25e75e118eb350ca024bc31a12c28b17d79ca11b2f177240d663253f6db3badf5a16459a4c036e0272a0fe267d7eb5406cde63e394e5847faa2cb2be4c2617aab66b103c2925d7477d1
   · 哈希算法：SHA1
-  · 文件大小：91,648 字节
+  · 文件大小：93,184 字节
 核心组件信息 (模块已强签名) (已内嵌)
   · 名称：gwctcore
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100855eedd84aa057d4da04401201bd55074332c0e6f9d8b882c8fb74005051af68844d51b21851a399392dc3fb5b1e9b9857aade696ff006cb81c106c7aa964253b455236eef5c2bd633633d72738e474b8731d51efe64e15436d401e1008dc73757a72e67170d9e0975c1ef036485bb2526a96b6d190efc65cf2729731d54dbb4
   · 哈希算法：SHA1
-  · 文件大小：23,642 字节 (已压缩，原始大小：52,224 字节)
+  · 文件大小：23,931 字节 (已压缩，原始大小：52,736 字节)
 ```
 
 ---
@@ -66,11 +66,22 @@
 - [x] __自动更新检查__
 
 > [!NOTE]
+> __[`<4.8.3.3>`](https://github.com/FeiLingshu/GWCT/releases/tag/v4.8.3.3) <a id=4833></a>添加了一个附加功能__
+> - __允许添加独立的本地例外配置__
+> - __在窗口大小配置区域右键并点击弹出的菜单项即可触发__
+> - __需在打开的目录中自行构建 `GWCT.config` 文件__
+> - __文件内容：`x,y,w,h` (`x` 为左上角横坐标，`y` 为左上角纵坐标，`w` 为窗口宽度，`h` 为窗口高度，中间无空格，仅允许传递整数值，注意逗号为半角符号)__
+>
 > __[`<4.8.3.2>`](https://github.com/FeiLingshu/GWCT/releases/tag/v4.8.3.2) 添加了一个新功能__
 > - __允许主动临时暂停某配置项捕获 (仅当前运行过程中有效；无需推送，立即生效)__
 > - __在对应列表项中按下鼠标右键即可触发__
 
 > [!TIP]
+> <pre><code>进行窗口大小时(包括进行自构建例外配置文件时)，请使用物理像素数据
+> 举例：
+>   · 当前屏幕物理分辨率 = 1920,1080，配置参数 = 1280,720 (或<a href="#4833">自构建</a>参数 = 10,10,1280,720)
+>   · 无论系统缩放倍率如何，应始终维持 1280,720 (或<a href="#4833">自构建</a>参数 10,10,1280,720)
+>   · 永远不要自行计算缩放，程序会自行适配</code></pre>
 > - ___程序会尝试检查游戏窗口是否支持调整，若不支持则会主动忽略___
 > - ___检测到运行过程中频繁重置窗口大小时，核心功能将会熔断，避免频繁触发重置造成系统卡顿 (点名批评地平线6)___
 > - ___程序尝试适配了显示缩放，但无法确保实际效果，如在非标准显示缩放下存在问题，请重置系统显示缩放设置___
@@ -81,7 +92,7 @@
 
 > __程序性能表现良好__
 
-- [x] __单文件运行，极小包体 ( `89.5KB` )__  
+- [x] __单文件运行，极小包体 ( `91.0KB` )__  
 - ___由于编译器将 `FileAlignment` 设置为 `0x200(512)` ，程序集编译后不足 `0.5KB` 的节区会使用空数据填充，作者已经尽力减小程序集体积，目前包体大小已高度优化___
 - [x] __运行过程中仅会引入极少的性能开销，自身会配置效能模式 (不受支持时会退化成低进程优先级模式)__
 - [x] __使用自开发 `ProcMgr` 组件，实现高速低开销进程快照和筛选__
@@ -103,7 +114,7 @@
 > - __该功能会对程序执行基于声誉的安全检查__
 > - __由于本程序没有购买数字证书，且不是通过 `Microsoft Store` 分发的，导致其可能无法通过 `SmartScreen` 的安全检测__
 > - __程序本身是安全的，出现 `SmartScreen` 警告时，请手动忽略__
->> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/7467c286665ac62dc00c28ed3a64be3932ac5c56b967c5cd765001d606ce0825)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/c36ed1786ebb5630f438745c371cad5a235c5984c8ab2f197cc9dc760968d4e2)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
+>> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/0922cc467b7f62c102ae2afdfe6d7d5b8d1e2927ac2b7e4ad03eefeef713fb80)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/d1718bd66a6ecabaa192e243b1d1a66cfa1b38dfce00f161713fbccdb9d70488)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
 >> - __请注意，报告中行为分析中的风险项并非真正存在风险，其中部分为实现功能所必须的行为，部分为 `.Net` 框架底层的自发行为__
 >> - __如有疑问，可自行查看源代码进行分析，作者从未在程序中植入恶意代码，可放心使用__
 
