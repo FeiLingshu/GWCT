@@ -68,7 +68,7 @@ namespace GWCT
         /// <summary>
         /// 静态主版本号
         /// </summary>
-        public static readonly Version MainVersion = new Version(4, 8, 3, 2);
+        public static readonly Version MainVersion = new Version(4, 8, 3, 3);
 
         /// <summary>
         /// 全局计时器

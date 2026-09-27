@@ -49,30 +49,154 @@
                                 CornerRadius="5"
                                 Padding="3,5"
                                 Margin="5">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition
-                                            Height="Auto" />
-                                        <RowDefinition
-                                            Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <ItemsPresenter
-                                        Grid.Row="0" />
-                                    <Border
-                                        Background="{StaticResource DarkBorder}"
-                                        CornerRadius="0,0,4,4"
-                                        Margin="-4,5,-4,-6"
-                                        Padding="1,0,1,1"
-                                        ClipToBounds="True"
-                                        Grid.Row="1">
-                                        <TextBlock
-                                            Foreground="{StaticResource Green}"
-                                            SnapsToDevicePixels="True"
-                                            UseLayoutRounding="True"
-                                            Text="Copyright 2026 By FeiLingshu"
-                                            Padding="5,2" />
-                                    </Border>
-                                </Grid>
+                                <ItemsPresenter />
+                                <Border.Effect>
+                                    <StaticResource
+                                        ResourceKey="PerformanceShadow" />
+                                </Border.Effect>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                x:Key="TextBase"
+                TargetType="Control"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="SnapsToDevicePixels"
+                    Value="True" />
+                <Setter
+                    Property="UseLayoutRounding"
+                    Value="True" />
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource LightText}" />
+            </Style>
+            <Style
+                TargetType="MenuItem"
+                BasedOn="{StaticResource TextBase}">
+                <Setter
+                    Property="Background"
+                    Value="{StaticResource DarkBg}" />
+                <Setter
+                    Property="BorderBrush"
+                    Value="Transparent" />
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate
+                            TargetType="MenuItem">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                Padding="5,5"
+                                CornerRadius="3">
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <ContentPresenter
+                                        ContentSource="Icon"
+                                        Width="15"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Margin="5,0,10,0" />
+                                    <ContentPresenter
+                                        ContentSource="Header"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left" />
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver"
+                                    Value="True">
+                                    <Setter
+                                        Property="Background"
+                                        Value="{StaticResource DarkBorder}" />
+                                    <Setter
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Blue}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                x:Key="StaticMenuItem"
+                TargetType="MenuItem"
+                BasedOn="{StaticResource TextBase}">
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate
+                            TargetType="MenuItem">
+                            <Border
+                                Background="{StaticResource DarkBorder}"
+                                CornerRadius="0,0,4,4"
+                                Margin="-4,5,-4,-6"
+                                Padding="1,0,1,1"
+                                ClipToBounds="True">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource Green}"
+                                    SnapsToDevicePixels="True"
+                                    UseLayoutRounding="True"
+                                    Text="Copyright 2026 By FeiLingshu"
+                                    Padding="5,2" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                TargetType="Separator"
+                BasedOn="{StaticResource {x:Type Control}}">
+                <Setter
+                    Property="Height"
+                    Value="2" />
+                <Setter
+                    Property="Margin"
+                    Value="0,5" />
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle
+                                Height="{TemplateBinding Height}"
+                                Fill="{TemplateBinding Background}"
+                                Stroke="{TemplateBinding Background}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+                x:Key="CustomToolTipStyle"
+                TargetType="ToolTip"
+                BasedOn="{StaticResource TextBase}">
+                <Setter
+                    Property="OverridesDefaultStyle"
+                    Value="True" />
+                <Setter
+                    Property="HasDropShadow"
+                    Value="False" />
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate
+                            TargetType="ToolTip">
+                            <Border
+                                Background="{StaticResource DarkBg}"
+                                BorderBrush="{StaticResource DarkBorder}"
+                                BorderThickness="2"
+                                CornerRadius="5"
+                                Padding="3"
+                                Margin="5">
+                                <ContentPresenter
+                                    Margin="5,1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center" />
                                 <Border.Effect>
                                     <StaticResource
                                         ResourceKey="PerformanceShadow" />
@@ -135,132 +259,6 @@
                 <Setter
                     Property="Foreground"
                     Value="{StaticResource LightText}" />
-            </Style>
-            <Style
-                x:Key="TextBase"
-                TargetType="Control"
-                BasedOn="{StaticResource {x:Type Control}}">
-                <Setter
-                    Property="SnapsToDevicePixels"
-                    Value="True" />
-                <Setter
-                    Property="UseLayoutRounding"
-                    Value="True" />
-                <Setter
-                    Property="Foreground"
-                    Value="{StaticResource LightText}" />
-            </Style>
-            <Style
-                TargetType="MenuItem"
-                BasedOn="{StaticResource TextBase}">
-                <Setter
-                    Property="Background"
-                    Value="{StaticResource DarkBg}" />
-                <Setter
-                    Property="BorderBrush"
-                    Value="Transparent" />
-                <Setter
-                    Property="BorderThickness"
-                    Value="1" />
-                <Setter
-                    Property="Padding"
-                    Value="5,5" />
-                <Setter
-                    Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate
-                            TargetType="MenuItem">
-                            <Border
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Padding="{TemplateBinding Padding}"
-                                CornerRadius="3">
-                                <StackPanel
-                                    Orientation="Horizontal">
-                                    <ContentPresenter
-                                        ContentSource="Icon"
-                                        Width="15"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        Margin="5,0,10,0" />
-                                    <ContentPresenter
-                                        ContentSource="Header"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Left" />
-                                </StackPanel>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger
-                                    Property="IsMouseOver"
-                                    Value="True">
-                                    <Setter
-                                        Property="Background"
-                                        Value="{StaticResource DarkBorder}" />
-                                    <Setter
-                                        Property="BorderBrush"
-                                        Value="{StaticResource Blue}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style
-                TargetType="Separator"
-                BasedOn="{StaticResource {x:Type Control}}">
-                <Setter
-                    Property="Height"
-                    Value="2" />
-                <Setter
-                    Property="Margin"
-                    Value="0,5" />
-                <Setter
-                    Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Rectangle
-                                Height="{TemplateBinding Height}"
-                                Fill="{TemplateBinding Background}"
-                                Stroke="{TemplateBinding Background}" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style
-                x:Key="CustomToolTipStyle"
-                TargetType="ToolTip"
-                BasedOn="{StaticResource TextBase}">
-                <Setter
-                    Property="OverridesDefaultStyle"
-                    Value="True" />
-                <Setter
-                    Property="HasDropShadow"
-                    Value="False" />
-                <Setter
-                    Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate
-                            TargetType="ToolTip">
-                            <Border
-                                Background="{StaticResource DarkBg}"
-                                BorderBrush="{StaticResource DarkBorder}"
-                                BorderThickness="2"
-                                CornerRadius="5"
-                                Padding="3"
-                                Margin="5">
-                                <ContentPresenter
-                                    Margin="5,1"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center" />
-                                <Border.Effect>
-                                    <StaticResource
-                                        ResourceKey="PerformanceShadow" />
-                                </Border.Effect>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
             </Style>
             <Style
                 x:Key="EnabledStyle"
@@ -367,6 +365,22 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+            <Style
+                x:Key="UIBorder"
+                TargetType="Border">
+                <Setter
+                    Property="Background"
+                    Value="{StaticResource DarkBg}" />
+                <Setter
+                    Property="BorderBrush"
+                    Value="{StaticResource DarkBorder}" />
+                <Setter
+                    Property="BorderThickness"
+                    Value="2" />
+                <Setter
+                    Property="CornerRadius"
+                    Value="5" />
             </Style>
             <Style
                 x:Key="UIButton"
@@ -559,8 +573,7 @@
             ContextMenuService.Placement="Bottom"
             x:Name="TITLE">
             <Grid.ContextMenu>
-                <ContextMenu
-                    x:Name="MENU">
+                <ContextMenu>
                     <MenuItem
                         Header="启用窗口置顶"
                         x:Name="OnTop">
@@ -591,6 +604,8 @@
                                 IsHitTestVisible="False" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem
+                        Style="{StaticResource StaticMenuItem}" />
                 </ContextMenu>
             </Grid.ContextMenu>
             <Image
@@ -679,11 +694,8 @@
             Margin="0,30,0,0"
             x:Name="SETTINGS">
             <Border
-                Background="{StaticResource DarkBg}"
-                BorderBrush="{StaticResource DarkBorder}"
-                BorderThickness="2"
                 Margin="10,10,10,80"
-                CornerRadius="5"
+                Style="{StaticResource UIBorder}"
                 x:Name="S">
                 <Grid>
                     <ListBox
@@ -892,11 +904,28 @@
                 <Border
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Background="Transparent"
-                    BorderBrush="{StaticResource DarkBorder}"
-                    BorderThickness="2"
-                    CornerRadius="5"
-                    Height="30">
+                    Height="30"
+                    ContextMenuService.Placement="Top"
+                    ContextMenuService.HorizontalOffset="-5"
+                    Style="{StaticResource UIBorder}"
+                    x:Name="SizeData">
+                    <Border.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem
+                                Header="配置例外* (需自行构建GWCT.config) "
+                                x:Name="USER">
+                                <MenuItem.Icon>
+                                    <Path
+                                        Data="M0 6L10 6M5 1L10 6L5 11"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Stroke="{StaticResource Yellow}"
+                                        StrokeThickness="2"
+                                        IsHitTestVisible="False" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Border.ContextMenu>
                     <Grid
                         Width="120">
                         <TextBox
@@ -946,11 +975,9 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
                     Background="{StaticResource DimBg}"
-                    BorderBrush="{StaticResource DarkBorder}"
-                    BorderThickness="2"
                     Width="110"
                     Height="25"
-                    CornerRadius="5"
+                    Style="{StaticResource UIBorder}"
                     x:Name="Save">
                     <TextBlock
                         HorizontalAlignment="Center"
@@ -968,15 +995,12 @@
         </Grid>
         <Grid
             Background="Transparent"
-            Width="500"
-            Margin="300,30,0,0"
+            Width="510"
+            Margin="290,30,0,0"
             x:Name="LOGS">
             <Border
-                Background="{StaticResource DarkBg}"
-                BorderBrush="{StaticResource DarkBorder}"
-                BorderThickness="2"
                 Margin="10"
-                CornerRadius="5"
+                Style="{StaticResource UIBorder}"
                 x:Name="L">
                 <Grid>
                     <ListBox

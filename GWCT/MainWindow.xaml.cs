@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -60,6 +61,37 @@ namespace GWCT
             this.CLOSE.PreviewMouseDown += blockmd;
             this.MINI.PreviewMouseDown += blockmd;
             this.STAT.PreviewMouseDown += blockmd;
+            void blockd(object s, MouseButtonEventArgs e)
+            {
+                if (e.ChangedButton == MouseButton.Right)
+                {
+                    MRBD = s;
+                    ((UIElement)s).ReleaseMouseCapture();
+                    this.NULLPART.Focus();
+                    SizeData.ContextMenu.PlacementTarget = SizeData;
+                    SizeData.ContextMenu.Placement = PlacementMode.Top;
+                    SizeData.ContextMenu.HorizontalOffset = -5D;
+                    SizeData.ContextMenu.IsOpen = true;
+                    e.Handled = true;
+                }
+            }
+            this.WidthData.PreviewMouseUp += blockd;
+            this.HeightData.PreviewMouseUp += blockd;
+            ProcessStartInfo OPEN = new ProcessStartInfo()
+            {
+                FileName = "cmd.exe",
+                Arguments = $"/c start \"\" \"\"",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            this.USER.Click += (s, e) =>
+            {
+                if (SettingList.SelectedIndex != -1)
+                {
+                    OPEN.Arguments = $"/c start \"\" \"{Path.GetDirectoryName(settings.Get(SettingList.SelectedIndex))}\"";
+                    using (var process = Process.Start(OPEN)) { }
+                }
+            };
             bool Win32CloseSignal = false;
             this.ICON.PreviewMouseDown += (s, e) =>
             {
@@ -229,6 +261,11 @@ namespace GWCT
         /// </summary>
         private readonly Logs logs = null;
 
+        /// <summary>
+        /// 响应暂停指令
+        /// </summary>
+        /// <param name="sender">事件来源</param>
+        /// <param name="e">事件数据</param>
         private void PauseTag(object sender, MouseButtonEventArgs e)
         {
             if (e.OriginalSource is TextBlock item && SettingList.SelectedIndex != -1 && item.Tag as string == (SettingList.SelectedItem as SettingEntry).P)
@@ -436,6 +473,11 @@ namespace GWCT
             warking();
         }
 
+        /// <summary>
+        /// 修改暂停标志
+        /// </summary>
+        /// <param name="path">目标路径</param>
+        /// <param name="add">是否为添加标志</param>
         private void ChangePause(string path, bool add)
         {
             procmgr.WritePause(path, add);
