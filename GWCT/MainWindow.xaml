@@ -977,6 +977,7 @@
                     Background="{StaticResource DimBg}"
                     Width="110"
                     Height="25"
+                    Padding="0,1,0,0"
                     Style="{StaticResource UIBorder}"
                     x:Name="Save">
                     <TextBlock

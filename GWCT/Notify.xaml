@@ -47,7 +47,7 @@
                 Background="{StaticResource DimBg}"
                 CornerRadius="5"
                 Margin="10"
-                Padding="5">
+                Padding="5,5,35,5">
                 <TextBlock
                     VerticalAlignment="Top"
                     TextAlignment="Left"

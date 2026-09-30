@@ -88,8 +88,16 @@ namespace GWCT
             {
                 if (SettingList.SelectedIndex != -1)
                 {
-                    OPEN.Arguments = $"/c start \"\" \"{Path.GetDirectoryName(settings.Get(SettingList.SelectedIndex))}\"";
+                    string dir = Path.GetDirectoryName(settings.Get(SettingList.SelectedIndex));
+                    SystemSounds.Asterisk.Play();
+                    new Notify(this, $"即将调用 Explorer.exe 打开 \"{dir}\" 目录，用户需自行创建或修改 GWCT.config 文件\n\n文件格式：x,y,w,h\n· x = 左上角横坐标\n· y = 左上角纵坐标\n· w = 窗口宽度\n· h = 窗口高度\n注意全部字符为半角字符，仅允许主屏幕空间范围").ShowDialog();
+                    OPEN.Arguments = $"/c start \"\" \"{dir}\"";
                     using (var process = Process.Start(OPEN)) { }
+                }
+                else
+                {
+                    SystemSounds.Hand.Play();
+                    new Notify(this, "无法执行例外配置\n\n详细信息：未选择有效的游戏文件").ShowDialog();
                 }
             };
             bool Win32CloseSignal = false;
@@ -419,6 +427,7 @@ namespace GWCT
                 launchers.Add(path, true);
             }
             this.CPUCore.IsEnabled = false;
+            Save.BorderBrush = Application.Current.Resources[bin.Verify() ? "DarkBorder" : "Blue"] as SolidColorBrush;
             async void warking()
             {
                 TaskCount.Add(out long tidvalue);
@@ -505,6 +514,7 @@ namespace GWCT
                     {
                         launchers.Add(filepath, true);
                         bin._PATHS.Add(filepath);
+                        Save.BorderBrush = Application.Current.Resources[bin.Verify() ? "DarkBorder" : "Blue"] as SolidColorBrush;
                     }
                 }
                 else
@@ -513,6 +523,7 @@ namespace GWCT
                     {
                         settings.Add(filepath);
                         bin.PATHS.Add(filepath);
+                        Save.BorderBrush = Application.Current.Resources[bin.Verify() ? "DarkBorder" : "Blue"] as SolidColorBrush;
                     }
                 }
             }
@@ -532,6 +543,7 @@ namespace GWCT
                     string filepath = launchers.Get(index);
                     launchers.Remove(index);
                     bin._PATHS.Remove(filepath);
+                    Save.BorderBrush = Application.Current.Resources[bin.Verify() ? "DarkBorder" : "Blue"] as SolidColorBrush;
                 }
             }
             else
@@ -543,6 +555,7 @@ namespace GWCT
                     ChangePause(filepath, false);
                     settings.Remove(index);
                     bin.PATHS.Remove(filepath);
+                    Save.BorderBrush = Application.Current.Resources[bin.Verify() ? "DarkBorder" : "Blue"] as SolidColorBrush;
                 }
             }
         }
@@ -608,23 +621,36 @@ namespace GWCT
         /// 配置宽度信息
         /// </summary>
         /// <param name="num">数据值</param>
-        private void SetWidth(ushort num) => bin.BINDATA.SET_1 = num;
+        private void SetWidth(ushort num)
+        {
+            bin.BINDATA.SET_1 = num;
+            Save.BorderBrush = Application.Current.Resources[bin.Verify() ? "DarkBorder" : "Blue"] as SolidColorBrush;
+        }
         /// <summary>
         /// 配置高度信息
         /// </summary>
         /// <param name="num">数据值</param>
-        private void SetHeight(ushort num) => bin.BINDATA.SET_2 = num;
+        private void SetHeight(ushort num)
+        {
+            bin.BINDATA.SET_2 = num;
+            Save.BorderBrush = Application.Current.Resources[bin.Verify() ? "DarkBorder" : "Blue"] as SolidColorBrush;
+        }
         /// <summary>
         /// 配置核心亲和性开关
         /// </summary>
         /// <param name="num">数据值</param>
-        private void SetFlag(bool flag) => bin.BINDATA.SET_3 = flag;
+        private void SetFlag(bool flag)
+        {
+            bin.BINDATA.SET_3 = flag;
+            Save.BorderBrush = Application.Current.Resources[bin.Verify() ? "DarkBorder" : "Blue"] as SolidColorBrush;
+        }
         /// <summary>
         /// 写入配置文件，并向核心组件发送数据
         /// </summary>
         private void Save2bin()
         {
             bin.SetData();
+            Save.BorderBrush = Application.Current.Resources["DarkBorder"] as SolidColorBrush;
             procmgr.WriteValues(bin.PATHS.ToArray(), bin.BINDATA.SET_1, bin.BINDATA.SET_2, bin.BINDATA.SET_3);
             PrintLog("配置数据已更新 (GWCT.bin)", false);
         }
