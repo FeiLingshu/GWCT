@@ -1,4 +1,4 @@
-[video.webm](https://github.com/user-attachments/assets/e87f114a-c40d-4055-bac0-7dea810fe703)
+[video.webm](https://github.com/user-attachments/assets/21854b4f-3ab7-477b-9f2f-d8e6f0fcf4a3)
 
 - __视频加载慢可以 [前往这里](https://www.bilibili.com/video/BV1hfhJ6pEnQ) 观看__
 - __UI 效果图：[国区](https://raw.giteeusercontent.com/FeiLingshu/GWCT_mirror/raw/master/EFFECT.png) [外网](https://raw.githubusercontent.com/FeiLingshu/GWCT/refs/heads/main/EFFECT.webp)__
