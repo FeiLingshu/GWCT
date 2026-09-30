@@ -61,15 +61,15 @@ namespace GWCT.Cfg
             /// <param name="FLAG">配置选项</param>
             /// <param name="PATH">程序路径</param>
             /// <param name="_PATH">程序路径(启动器附加)</param>
-            public DATA((ushort, ushort) SET, bool FLAG, string[] PATH, string[] _PATH)
+            public DATA((ushort, ushort) SET, bool FLAG, SortedSet<string> PATH, SortedSet<string> _PATH)
             {
                 this.SET_1 = SET.Item1;
                 this.SET_2 = SET.Item2;
                 this.SET_3 = FLAG;
-                this.PATH = UTF8.GetBytes(string.Join("\n", PATH));
-                this.PLENGTH = this.PATH.Length;
-                this._PATH = UTF8.GetBytes(string.Join("\n", _PATH));
-                this._PLENGTH = this._PATH.Length;
+                this.PATH = PATH == null ? new byte[0] : UTF8.GetBytes(string.Join("\n", PATH));
+                this.PLENGTH = PATH == null ? 0 : this.PATH.Length;
+                this._PATH = PATH == null ? new byte[0] : UTF8.GetBytes(string.Join("\n", _PATH));
+                this._PLENGTH = PATH == null ? 0 : this._PATH.Length;
             }
 
             /// <summary>
@@ -122,7 +122,7 @@ namespace GWCT.Cfg
             /// <returns>返回默认配置信息实例</returns>
             public static DATA Empty()
             {
-                return new DATA((1920, 1080), false, new string[0], new string[0]);
+                return new DATA((1920, 1080), false, null, null);
             }
 
             /// <summary>
@@ -172,6 +172,10 @@ namespace GWCT.Cfg
         /// 存储配置文件初始状态
         /// </summary>
         private readonly bool configexist = false;
+        /// <summary>
+        /// 存储原始字节数组
+        /// </summary>
+        public byte[] configbytes = null;
 
         /// <summary>
         /// 默认构造函数
@@ -202,12 +206,12 @@ namespace GWCT.Cfg
         /// <summary>
         /// 用于缓存路径信息的全局字段
         /// </summary>
-        public HashSet<string> PATHS = new HashSet<string>(64, StringComparer.OrdinalIgnoreCase);
+        public SortedSet<string> PATHS = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// 用于缓存路径信息的全局字段(启动器附加)
         /// </summary>
-        public HashSet<string> _PATHS = new HashSet<string>(64, StringComparer.OrdinalIgnoreCase);
+        public SortedSet<string> _PATHS = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// 检查配置文件合法性
@@ -215,18 +219,48 @@ namespace GWCT.Cfg
         /// <returns>返回检查结果</returns>
         internal bool Check()
         {
-            if (configexist)
+            try
             {
-                DATA data;
-                HashSet<string> paths;
-                HashSet<string> _paths;
-                try
+                if (configexist)
                 {
-                    data = Read();
-                    paths = new HashSet<string>(UTF8.GetString(data.PATH).Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries));
-                    _paths = new HashSet<string>(UTF8.GetString(data._PATH).Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries));
+                    DATA data;
+                    SortedSet<string> paths;
+                    SortedSet<string> _paths;
+                    try
+                    {
+                        data = Read();
+                        paths = new SortedSet<string>(UTF8.GetString(data.PATH).Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries));
+                        _paths = new SortedSet<string>(UTF8.GetString(data._PATH).Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries));
+                    }
+                    catch (Exception)
+                    {
+                        BINDATA = DATA.Empty();
+                        PATHS.Clear();
+                        _PATHS.Clear();
+                        Writestat(TimeSpan.Zero);
+                        Write();
+                        return false;
+                    }
+                    foreach (string path in paths)
+                    {
+                        if (!File.Exists(path))
+                        {
+                            paths.Remove(path);
+                        }
+                    }
+                    foreach (string _path in _paths)
+                    {
+                        if (!File.Exists(_path))
+                        {
+                            _paths.Remove(_path);
+                        }
+                    }
+                    BINDATA = data;
+                    PATHS = paths;
+                    _PATHS = _paths;
+                    return true;
                 }
-                catch (Exception)
+                else
                 {
                     BINDATA = DATA.Empty();
                     PATHS.Clear();
@@ -235,34 +269,21 @@ namespace GWCT.Cfg
                     Write();
                     return false;
                 }
-                foreach (string path in paths)
-                {
-                    if (!File.Exists(path))
-                    {
-                        paths.Remove(path);
-                    }
-                }
-                foreach (string _path in _paths)
-                {
-                    if (!File.Exists(_path))
-                    {
-                        _paths.Remove(_path);
-                    }
-                }
-                BINDATA = data;
-                PATHS = paths;
-                _PATHS = _paths;
-                return true;
             }
-            else
+            finally
             {
-                BINDATA = DATA.Empty();
-                PATHS.Clear();
-                _PATHS.Clear();
-                Writestat(TimeSpan.Zero);
-                Write();
-                return false;
+                configbytes = new byte[config.Length - 14];
+                config.Seek(14, SeekOrigin.Begin);
+                config.Read(configbytes, 0, configbytes.Length);
             }
+        }
+        /// <summary>
+        /// 校验历史数据
+        /// </summary>
+        /// <returns>返回是否和历史数据相同</returns>
+        public bool Verify()
+        {
+            return configbytes.SequenceEqual(new DATA((BINDATA.SET_1, BINDATA.SET_2), BINDATA.SET_3, PATHS, _PATHS).Serialize());
         }
 
         /// <summary>
@@ -289,7 +310,7 @@ namespace GWCT.Cfg
                     }
                 }
             }
-            BINDATA = new DATA((BINDATA.SET_1, BINDATA.SET_2), BINDATA.SET_3, PATHS.ToArray(), _PATHS.ToArray());
+            BINDATA = new DATA((BINDATA.SET_1, BINDATA.SET_2), BINDATA.SET_3, PATHS, _PATHS);
             Write();
             return true;
         }
@@ -408,6 +429,7 @@ namespace GWCT.Cfg
         private void Write()
         {
             byte[] bytes = BINDATA.Serialize();
+            configbytes = bytes;
             config.SetLength(14);
             config.Seek(0, SeekOrigin.End);
             config.Write(bytes, 0, bytes.Length);

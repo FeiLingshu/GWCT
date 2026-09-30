@@ -54,7 +54,7 @@
             路径数据的UTF8编码字节(启动器附加)
             </summary>
         </member>
-        <member name="M:GWCT.Cfg.Bin.DATA.#ctor(System.ValueTuple{System.UInt16,System.UInt16},System.Boolean,System.String[],System.String[])">
+        <member name="M:GWCT.Cfg.Bin.DATA.#ctor(System.ValueTuple{System.UInt16,System.UInt16},System.Boolean,System.Collections.Generic.SortedSet{System.String},System.Collections.Generic.SortedSet{System.String})">
             <summary>
             初始化配置实例
             </summary>
@@ -121,6 +121,11 @@
             存储配置文件初始状态
             </summary>
         </member>
+        <member name="F:GWCT.Cfg.Bin.configbytes">
+            <summary>
+            存储原始字节数组
+            </summary>
+        </member>
         <member name="M:GWCT.Cfg.Bin.#ctor">
             <summary>
             默认构造函数
@@ -151,6 +156,12 @@
             检查配置文件合法性
             </summary>
             <returns>返回检查结果</returns>
+        </member>
+        <member name="M:GWCT.Cfg.Bin.Verify">
+            <summary>
+            校验历史数据
+            </summary>
+            <returns>返回是否和历史数据相同</returns>
         </member>
         <member name="M:GWCT.Cfg.Bin.SetData(System.Boolean)">
             <summary>
