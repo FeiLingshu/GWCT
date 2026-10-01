@@ -37,14 +37,11 @@ namespace GWCT
             InitializeComponent();
             IntPtr handle = IntPtr.Zero;
             SelfTimer = timer;
-            // 初始化事件绑定
+            // 初始化UI框架
             this.MouseLeftButtonDown += (s, e) => MLBD = e.OriginalSource;
             this.MouseRightButtonDown += (s, e) => MRBD = e.OriginalSource;
             this.TITLE.MouseLeftButtonDown += (s, e) => this.DragMove();
-            this.TITLE.PreviewMouseUp += (s, e) =>
-            {
-                if (e.ChangedButton == MouseButton.Right && MRBD != e.OriginalSource) e.Handled = true;
-            };
+            this.TITLE.PreviewMouseUp += (s, e) => e.Handled = e.ChangedButton == MouseButton.Right && MRBD != e.OriginalSource;
             void blockmd(object s, MouseButtonEventArgs e)
             {
                 switch (e.ChangedButton)
@@ -61,13 +58,12 @@ namespace GWCT
             this.CLOSE.PreviewMouseDown += blockmd;
             this.MINI.PreviewMouseDown += blockmd;
             this.STAT.PreviewMouseDown += blockmd;
-            void blockd(object s, MouseButtonEventArgs e)
+            void blockd(object s, MouseButtonEventArgs e) => MRBD = this.SizeData;
+            void blocku(object s, MouseButtonEventArgs e)
             {
-                if (e.ChangedButton == MouseButton.Right)
+                if (MRBD is Border b && b == this.SizeData)
                 {
-                    MRBD = s;
                     ((UIElement)s).ReleaseMouseCapture();
-                    this.NULLPART.Focus();
                     SizeData.ContextMenu.PlacementTarget = SizeData;
                     SizeData.ContextMenu.Placement = PlacementMode.Top;
                     SizeData.ContextMenu.HorizontalOffset = -5D;
@@ -75,31 +71,11 @@ namespace GWCT
                     e.Handled = true;
                 }
             }
-            this.WidthData.PreviewMouseUp += blockd;
-            this.HeightData.PreviewMouseUp += blockd;
-            ProcessStartInfo OPEN = new ProcessStartInfo()
-            {
-                FileName = "cmd.exe",
-                Arguments = $"/c start \"\" \"\"",
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-            this.USER.Click += (s, e) =>
-            {
-                if (SettingList.SelectedIndex != -1)
-                {
-                    string dir = Path.GetDirectoryName(settings.Get(SettingList.SelectedIndex));
-                    SystemSounds.Asterisk.Play();
-                    new Notify(this, $"即将调用 Explorer.exe 打开 \"{dir}\" 目录，用户需自行创建或修改 GWCT.config 文件\n\n文件格式：x,y,w,h\n· x = 左上角横坐标\n· y = 左上角纵坐标\n· w = 窗口宽度\n· h = 窗口高度\n注意全部字符为半角字符，仅允许主屏幕空间范围").ShowDialog();
-                    OPEN.Arguments = $"/c start \"\" \"{dir}\"";
-                    using (var process = Process.Start(OPEN)) { }
-                }
-                else
-                {
-                    SystemSounds.Hand.Play();
-                    new Notify(this, "无法执行例外配置\n\n详细信息：未选择有效的游戏文件").ShowDialog();
-                }
-            };
+            this.WidthData.PreviewMouseRightButtonDown += blockd;
+            this.HeightData.PreviewMouseRightButtonDown += blockd;
+            this.WidthData.PreviewMouseRightButtonUp += blocku;
+            this.HeightData.PreviewMouseRightButtonUp += blocku;
+            this.SizeData.PreviewMouseUp += (s, e) => e.Handled = !(MRBD is Border b && b == this.SizeData);
             bool Win32CloseSignal = false;
             this.ICON.PreviewMouseDown += (s, e) =>
             {
@@ -125,6 +101,16 @@ namespace GWCT
                 if (e.ChangedButton == MouseButton.Left && MLBD == e.OriginalSource) this.WindowState = WindowState.Minimized;
                 e.Handled = true;
             };
+            this.STAT.PreviewMouseUp += (s, e) =>
+            {
+                if (e.ChangedButton == MouseButton.Left && MLBD == e.OriginalSource)
+                {
+                    bin.GetStat(out uint C, SelfTimer.Elapsed, out TimeSpan R, out TimeSpan G);
+                    SystemSounds.Asterisk.Play();
+                    new Notify(this, $"应用程序统计信息\n\n版本信息　　  {App.MainVersion}\n加载次数　　  {C:N0} 次\n累计游戏时长  {G.Days:N0} 天 {G.Hours} 小时 {G.Minutes} 分 {G.Seconds} 秒\n累计运行时长  {R.Days:N0} 天 {R.Hours} 小时 {R.Minutes} 分 {R.Seconds} 秒").ShowDialog();
+                }
+                e.Handled = true;
+            };
             this.ICON.PreviewMouseUp += (s, e) =>
             {
                 switch (e.ChangedButton)
@@ -138,45 +124,76 @@ namespace GWCT
                 }
                 e.Handled = true;
             };
+            this.OnTop.Click += (s, e) =>
+            {
+                bool value = !this.Topmost;
+                this.Topmost = value;
+                this.OnTop.Header = value ? "停用窗口置顶" : "启用窗口置顶";
+            };
+            this.Link.Click += (s, e) => Clipboard.SetText("https://github.com/FeiLingshu/GWCT");
+            // 初始化UI组件
+            void KillFocus(object sender, MouseButtonEventArgs e)
+            {
+                if (e.OriginalSource == MLBD && (e.OriginalSource == this.SETTINGS || e.OriginalSource == this.LOGS)) this.NULLPART.Focus();
+            }
+            this.MouseLeftButtonUp += KillFocus;
             void ResetSelect(object sender, EventArgs e)
             {
                 SettingList.SelectedIndex = -1;
                 LauncherList.SelectedIndex = -1;
             }
+            this.Launcher.Checked += ResetSelect;
+            this.Launcher.Unchecked += ResetSelect;
             this.S.MouseLeftButtonUp += (s, e) =>
             {
                 if (MLBD != e.OriginalSource) return;
                 if (e.OriginalSource is ScrollViewer) ResetSelect(s, e);
                 this.NULLPART.Focus();
             };
-            this.Launcher.Checked += ResetSelect;
-            this.Launcher.Unchecked += ResetSelect;
             this.L.MouseLeftButtonUp += (s, e) =>
             {
                 if (MLBD != e.OriginalSource) return;
                 if (e.OriginalSource is ScrollViewer) LogList.SelectedIndex = -1;
                 this.NULLPART.Focus();
             };
-            void KillFocus(object sender, MouseButtonEventArgs e)
-            {
-                if (e.OriginalSource == MLBD && (e.OriginalSource == this.SETTINGS || e.OriginalSource == this.LOGS)) this.NULLPART.Focus();
-            }
-            this.MouseLeftButtonUp += KillFocus;
-            // UI数据更新
+            // 初始化UI交互
             this.SettingList.MouseRightButtonUp += PauseTag;
             this.Add.MouseLeftButtonUp += AddSetting;
             this.Remove.MouseLeftButtonUp += RemoveSetting;
             this.Start.MouseLeftButtonUp += StartLauncher;
-            this.WidthData.PreviewTextInput += Number_PreviewTextInput;
-            this.HeightData.PreviewTextInput += Number_PreviewTextInput;
             DataObject.AddPastingHandler(this.WidthData, OnPastingEvent);
             DataObject.AddPastingHandler(this.HeightData, OnPastingEvent);
+            this.WidthData.PreviewTextInput += Number_PreviewTextInput;
+            this.HeightData.PreviewTextInput += Number_PreviewTextInput;
             this.WidthData.TextChanged += WidthData_TextChanged;
             this.HeightData.TextChanged += HeightData_TextChanged;
+            ProcessStartInfo OPEN = new ProcessStartInfo()
+            {
+                FileName = "cmd.exe",
+                Arguments = $"/c start \"\" \"\"",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            this.USER.Click += (s, e) =>
+            {
+                if (SettingList.SelectedIndex != -1)
+                {
+                    string dir = Path.GetDirectoryName(settings.Get(SettingList.SelectedIndex));
+                    SystemSounds.Asterisk.Play();
+                    new Notify(this, $"即将调用 Explorer.exe 打开 \"{dir}\" 目录，用户需自行创建或修改 GWCT.config 文件\n\n文件格式：x,y,w,h\n· x = 左上角横坐标\n· y = 左上角纵坐标\n· w = 窗口宽度\n· h = 窗口高度\n注意全部字符为半角字符，仅允许主屏幕空间范围").ShowDialog();
+                    OPEN.Arguments = $"/c start \"\" \"{dir}\"";
+                    using (var process = Process.Start(OPEN)) { }
+                }
+                else
+                {
+                    SystemSounds.Hand.Play();
+                    new Notify(this, "无法执行例外配置\n\n详细信息：未选择有效的游戏文件").ShowDialog();
+                }
+            };
             this.CPUCore.Checked += CPUCore_Checked;
             this.CPUCore.Unchecked += CPUCore_Unchecked;
             this.Save.MouseLeftButtonUp += SaveCfg;
-            // 初始属性配置
+            // 初始化动态UI组件
             this.BarMaskS.Width = this.BarMaskL.Width = SystemParameters.VerticalScrollBarWidth + 5;
             // 初始化数据绑定
             this.SettingList.DataContext = settings = new Settings();
@@ -195,7 +212,7 @@ namespace GWCT
             bin = new Bin();
             winctrl = new WinCtrl((output, error) => Dispatcher.Invoke(() => PrintLog(output, error)));
             procmgr = new ProcMgr(bin, winctrl);
-            // 窗口事件节点
+            // 初始化UI事件
             this.Loaded += (s, e) =>
             {
                 handle = new WindowInteropHelper(this).Handle;
@@ -220,23 +237,6 @@ namespace GWCT
                 EndTimer();
                 winctrl.EndEventHook();
                 procmgr.Stop();
-            };
-            this.OnTop.Click += (s, e) =>
-            {
-                bool value = !this.Topmost;
-                this.Topmost = value;
-                this.OnTop.Header = value ? "停用窗口置顶" : "启用窗口置顶";
-            };
-            this.Link.Click += (s, e) => Clipboard.SetText("https://github.com/FeiLingshu/GWCT");
-            this.STAT.PreviewMouseUp += (s, e) =>
-            {
-                if (e.ChangedButton == MouseButton.Left && MLBD == e.OriginalSource)
-                {
-                    bin.GetStat(out uint C, SelfTimer.Elapsed, out TimeSpan R, out TimeSpan G);
-                    SystemSounds.Asterisk.Play();
-                    new Notify(this, $"应用程序统计信息\n\n版本信息　　  {App.MainVersion}\n加载次数　　  {C:N0} 次\n累计游戏时长  {G.Days:N0} 天 {G.Hours} 小时 {G.Minutes} 分 {G.Seconds} 秒\n累计运行时长  {R.Days:N0} 天 {R.Hours} 小时 {R.Minutes} 分 {R.Seconds} 秒").ShowDialog();
-                }
-                e.Handled = true;
             };
         }
 

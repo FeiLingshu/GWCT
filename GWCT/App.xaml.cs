@@ -55,20 +55,13 @@ namespace GWCT
             }
             Assembly assembly = Assembly.Load(dllBytes);
             if (!VmVyaWZ5(null, ZGxsa2V5, assembly?.GetName()?.GetPublicKey())) return false;
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-            {
-                if (args.Name == assembly.GetName().FullName)
-                {
-                    return assembly;
-                }
-                return null;
-            };
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => args.Name == assembly.GetName().FullName ? assembly : null;
             return true;
         }
         /// <summary>
         /// 静态主版本号
         /// </summary>
-        public static readonly Version MainVersion = new Version(4, 8, 3, 4);
+        public static readonly Version MainVersion = new Version(4, 8, 3, 5);
 
         /// <summary>
         /// 全局计时器
@@ -193,7 +186,7 @@ namespace GWCT
             }
             try
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
                 {
                     if (window != null && !window_isclosed) window.Close();
                     Popup(errorinfo.ToString(), MessageBoxImage.Error);
