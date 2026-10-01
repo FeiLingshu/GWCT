@@ -19,7 +19,7 @@
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100ade4a76802241de71f5bc96986bb265d675562e388c3eb234667df86face1485948aab7587f35669c8811b6c4194c09152270bd20efda25e75e118eb350ca024bc31a12c28b17d79ca11b2f177240d663253f6db3badf5a16459a4c036e0272a0fe267d7eb5406cde63e394e5847faa2cb2be4c2617aab66b103c2925d7477d1
   · 哈希算法：SHA1
-  · 文件大小：94,208 字节
+  · 文件大小：94,720 字节
 核心组件信息 (模块已强签名) (已内嵌)
   · 名称：gwctcore
   · 架构：AnyCPU
@@ -93,7 +93,7 @@
 
 > __程序性能表现良好__
 
-- [x] __单文件运行，极小包体 ( `92.0KB` )__  
+- [x] __单文件运行，极小包体 ( `92.5KB` )__  
 - ___由于编译器将 `FileAlignment` 设置为 `0x200(512)` ，程序集编译后不足 `0.5KB` 的节区会使用空数据填充，作者已经尽力减小程序集体积，目前包体大小已高度优化___
 - [x] __运行过程中仅会引入极少的性能开销，自身会配置效能模式 (不受支持时会退化成低进程优先级模式)__
 - [x] __使用自开发 `ProcMgr` 组件，实现高速低开销进程快照和筛选__
@@ -115,7 +115,7 @@
 > - __该功能会对程序执行基于声誉的安全检查__
 > - __由于本程序没有购买数字证书，且不是通过 `Microsoft Store` 分发的，导致其可能无法通过 `SmartScreen` 的安全检测__
 > - __程序本身是安全的，出现 `SmartScreen` 警告时，请手动忽略__
->> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/2896c3f3ca112c98f73fb517e2fa797be4a7ed7571dfe29aeb4abcee419d7093)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/60e870f15f7cf1a608029f55c83d13e5ffb8af422e099e737ad6121acb6088e3)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
+>> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/e0b4e5f4b4b2a3b0250ecfd149b7f5f5e14ea016e7ff6547af9cc3a839db4ad3)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/60e870f15f7cf1a608029f55c83d13e5ffb8af422e099e737ad6121acb6088e3)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
 >> - __请注意，报告中行为分析中的风险项并非真正存在风险，其中部分为实现功能所必须的行为，部分为 `.Net` 框架底层的自发行为__
 >> - __如有疑问，可自行查看源代码进行分析，作者从未在程序中植入恶意代码，可放心使用__
 
