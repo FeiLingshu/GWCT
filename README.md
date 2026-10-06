@@ -25,7 +25,7 @@
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100855eedd84aa057d4da04401201bd55074332c0e6f9d8b882c8fb74005051af68844d51b21851a399392dc3fb5b1e9b9857aade696ff006cb81c106c7aa964253b455236eef5c2bd633633d72738e474b8731d51efe64e15436d401e1008dc73757a72e67170d9e0975c1ef036485bb2526a96b6d190efc65cf2729731d54dbb4
   · 哈希算法：SHA1
-  · 文件大小：24,047 字节 (已压缩，原始大小：53,248 字节)
+  · 文件大小：24,020 字节 (已压缩，原始大小：53,248 字节)
 ```
 
 ---
@@ -66,6 +66,13 @@
 - [x] __自动更新检查__
 
 > [!NOTE]
+> __[`<4.8.3.6>`](https://github.com/FeiLingshu/GWCT/releases/tag/v4.8.3.6) 更新部分核心代码__
+> - __本次更新解决了自开发 `ProcMgr` 组件中的部分问题__
+>   - __该问题由内核函数 `::CreateToolhelp32Snapshot` 引发__
+>   - __由于该函数存在 [内核态 -> 用户态] 的内存复制行为，且数据量较大，会频繁触发软缺页，增加内存控制器压力，表现为页面错误随时间大量增加__
+>   - ___声明：页面错误并不意味着存在内存泄漏，无需担心___
+> - __现已使用反射调用 `CLR` 内部函数实现相关功能，经测试性能良好（较前者提升明显）__
+>
 > __[`<4.8.3.3>`](https://github.com/FeiLingshu/GWCT/releases/tag/v4.8.3.3) <a id=4833></a>添加了一个附加功能__
 > - __允许添加独立的本地例外配置 (配置后永久有效；无需推送，立即生效；若需移除请手动删除创建的文件)__
 > - __在窗口大小配置区域右键并点击弹出的菜单项即可触发__
@@ -115,7 +122,7 @@
 > - __该功能会对程序执行基于声誉的安全检查__
 > - __由于本程序没有购买数字证书，且不是通过 `Microsoft Store` 分发的，导致其可能无法通过 `SmartScreen` 的安全检测__
 > - __程序本身是安全的，出现 `SmartScreen` 警告时，请手动忽略__
->> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/e0b4e5f4b4b2a3b0250ecfd149b7f5f5e14ea016e7ff6547af9cc3a839db4ad3)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/60e870f15f7cf1a608029f55c83d13e5ffb8af422e099e737ad6121acb6088e3)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
+>> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/9f76cd4e0adf2bbfbb72ac823b9fb45e843b750b4a15153aee41b1c6b0d2db5d)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/754b82ca9ce6543224aac7a5ca1c8c9d0f6d752813f5aaaa6dc7606ee96010f1)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
 >> - __请注意，报告中行为分析中的风险项并非真正存在风险，其中部分为实现功能所必须的行为，部分为 `.Net` 框架底层的自发行为__
 >> - __如有疑问，可自行查看源代码进行分析，作者从未在程序中植入恶意代码，可放心使用__
 
