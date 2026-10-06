@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -114,6 +113,12 @@ namespace GWCT.Tool
         private async Task Work()
         {
             TaskCount.Add(out long tidvalue);
+            Assembly DiagnosticsAssembly = typeof(Process).Assembly;
+            MethodInfo GetProcessInfosMethod = DiagnosticsAssembly?.GetType("System.Diagnostics.ProcessManager")?.GetMethod("GetProcessInfos", BindingFlags.Public | BindingFlags.Static, null, new Type[] { typeof(string) }, null);
+            Type ProcessInfoType = DiagnosticsAssembly?.GetType("System.Diagnostics.ProcessInfo");
+            FieldInfo PidProperty = ProcessInfoType?.GetField("processId");
+            FieldInfo NameProperty = ProcessInfoType?.GetField("processName");
+            if (GetProcessInfosMethod == null || PidProperty == null || NameProperty == null) throw new ArgumentNullException("ProcMgr组件初始化失败。");
             winctrl.IsWorking = true;
             if (winctrl.IsWorking) winctrl.output($"ProcMgr组件已启动 (#{Task.CurrentId})", false);
             HashSet<string> ProcFlag = new HashSet<string>(64);
@@ -149,84 +154,66 @@ namespace GWCT.Tool
                         {
                             cache.Add(Path.GetFileName(paths[index]));
                         }
-                        ILookup<string, int> processcache = null;
-                        List<PROCESSENTRY32> processes = new List<PROCESSENTRY32>(indexpool.Count * 2);
-                        IntPtr hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-                        if (hSnapshot == IntPtr.Zero || hSnapshot == new IntPtr(-1)/*INVALID_HANDLE_VALUE*/)
+                        Dictionary<string, List<int>> processcache = null;
+                        object result = GetProcessInfosMethod.Invoke(null, new object[] { "." });
+                        if (result is Array pinfos)
                         {
-                            throw new Win32Exception(Marshal.GetLastWin32Error(), "生成进程快照失败。");
-                        }
-                        bool th32err = false;
-                        try
-                        {
-                            PROCESSENTRY32 pe32 = new PROCESSENTRY32
+                            processcache = new Dictionary<string, List<int>>(pinfos.Length);
+                            foreach (var item in pinfos)
                             {
-                                dwSize = (uint)Marshal.SizeOf(typeof(PROCESSENTRY32))
-                            };
-                            if (Process32First(hSnapshot, ref pe32))
-                            {
-                                do
+                                int pid = (int)PidProperty.GetValue(item);
+                                string name = (string)NameProperty.GetValue(item);
+                                if (processcache.TryGetValue(name, out var list))
                                 {
-                                    if (cache.Contains(pe32.szExeFile))
+                                    list.Add(pid);
+                                }
+                                else
+                                {
+                                    processcache[name] = new List<int>
                                     {
-                                        processes.Add(pe32);
-                                    }
-                                } while (Process32Next(hSnapshot, ref pe32));
-                                processcache = processes
-                                    .ToLookup(
-                                        keySelector: p => p.szExeFile,
-                                        elementSelector: p => (int)p.th32ProcessID,
-                                        comparer: StringComparer.OrdinalIgnoreCase
-                                    );
-                                processes.Clear();
-                                cache.Clear();
+                                        pid
+                                    };
+                                }
                             }
                         }
-                        catch (Exception) { th32err = true; }
-                        finally
-                        {
-                            CloseHandle(hSnapshot);
-                            if (th32err || processcache == null)
-                            {
-                                throw new Win32Exception(-1, "读取进程快照失败。");
-                            }
-                        }
-                        if (processcache.Count > 0)
+                        if (processcache != null && processcache.Count > 0)
                         {
                             List<(int, string)> ProcessList = new List<(int, string)>(indexpool.Count);
                             foreach (int index in indexpool)
                             {
-                                IEnumerable<int> pids = processcache[Path.GetFileName(paths[index])];
-                                foreach (int pid in pids)
+                                if (processcache.TryGetValue(Path.GetFileNameWithoutExtension(paths[index]), out var pids))
                                 {
-                                    try
+                                    foreach (int pid in pids)
                                     {
-                                        // 由于游戏进程受到保护，process.MainModule.FileName会产生拒绝访问的win32异常
-                                        IntPtr phandle = OpenProcess(
-                                            ProcessAccessFlags.PROCESS_QUERY_INFORMATION | ProcessAccessFlags.PROCESS_VM_READ,
-                                            false, pid);
-                                        if (phandle != IntPtr.Zero)
+                                        try
                                         {
-                                            StringBuilder path = new StringBuilder(32768);
-                                            uint scount = (uint)path.Capacity;
-                                            QueryFullProcessImageName(phandle, 0, path, ref scount);
-                                            string p = path.ToString().Trim();
-                                            path.Clear();
-                                            if (p == paths[index])
+                                            // 由于游戏进程受到保护，process.MainModule.FileName会产生拒绝访问的win32异常
+                                            IntPtr phandle = OpenProcess(
+                                                ProcessAccessFlags.PROCESS_QUERY_INFORMATION | ProcessAccessFlags.PROCESS_VM_READ,
+                                                false, pid);
+                                            if (phandle != IntPtr.Zero)
                                             {
-                                                await ProcFlagLock.WaitAsync();
-                                                ProcFlag.Add(paths[index]);
-                                                ProcFlagLock.Release();
-                                                ProcessList.Add((pid, paths[index]));
+                                                StringBuilder path = new StringBuilder(32768);
+                                                uint scount = (uint)path.Capacity;
+                                                QueryFullProcessImageName(phandle, 0, path, ref scount);
+                                                string p = path.ToString().Trim();
+                                                path.Clear();
+                                                if (p == paths[index])
+                                                {
+                                                    await ProcFlagLock.WaitAsync();
+                                                    ProcFlag.Add(paths[index]);
+                                                    ProcFlagLock.Release();
+                                                    ProcessList.Add((pid, paths[index]));
+                                                    CloseHandle(phandle);
+                                                    break;
+                                                }
                                                 CloseHandle(phandle);
-                                                break;
                                             }
-                                            CloseHandle(phandle);
                                         }
-                                    }
-                                    catch (Exception)
-                                    {
-                                        continue;
+                                        catch (Exception)
+                                        {
+                                            continue;
+                                        }
                                     }
                                 }
                             }
