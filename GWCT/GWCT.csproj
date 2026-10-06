@@ -78,7 +78,8 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gwctcore">
+    <Reference Include="gwctcore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=dab2c249d47b9d4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\gwctcore\gwctcore\bin\Release\gwctcore.dll</HintPath>
       <Private>False</Private>
     </Reference>
