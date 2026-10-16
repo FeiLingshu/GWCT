@@ -122,7 +122,7 @@
 > - __该功能会对程序执行基于声誉的安全检查__
 > - __由于本程序没有购买数字证书，且不是通过 `Microsoft Store` 分发的，导致其可能无法通过 `SmartScreen` 的安全检测__
 > - __程序本身是安全的，出现 `SmartScreen` 警告时，请手动忽略__
->> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/9f76cd4e0adf2bbfbb72ac823b9fb45e843b750b4a15153aee41b1c6b0d2db5d)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/754b82ca9ce6543224aac7a5ca1c8c9d0f6d752813f5aaaa6dc7606ee96010f1)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
+>> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/ddc62f6d31adb0ce7180644eb4a9e72a5822a4ddfb683b3de4befe49b74b8919)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/ce77b36e3fcf93ba4298e2a8fb535d278e8988b72cf99c5c71a91f7a352bc98a)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
 >> - __请注意，报告中行为分析中的风险项并非真正存在风险，其中部分为实现功能所必须的行为，部分为 `.Net` 框架底层的自发行为__
 >> - __如有疑问，可自行查看源代码进行分析，作者从未在程序中植入恶意代码，可放心使用__
 
