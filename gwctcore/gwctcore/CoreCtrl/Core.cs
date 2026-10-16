@@ -68,7 +68,7 @@ namespace GWCT.CoreCtrl
                     basic = (ulong)self.ProcessorAffinity.ToInt64();
                 }
                 short report = CPUID.GetPCoreMaps(out ulong map);
-                if (report == 0 && map > 0 && map < basic)
+                if (report == 0 && map > 0 && (map & ~basic) == 0)
                 {
                     Volatile.Write(ref _PMap, map);
                     IsReady = true;
