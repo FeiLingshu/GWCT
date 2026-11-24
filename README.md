@@ -25,7 +25,7 @@
   · 架构：AnyCPU
   · 签名公钥：0024000004800000940000000602000000240000525341310004000001000100855eedd84aa057d4da04401201bd55074332c0e6f9d8b882c8fb74005051af68844d51b21851a399392dc3fb5b1e9b9857aade696ff006cb81c106c7aa964253b455236eef5c2bd633633d72738e474b8731d51efe64e15436d401e1008dc73757a72e67170d9e0975c1ef036485bb2526a96b6d190efc65cf2729731d54dbb4
   · 哈希算法：SHA1
-  · 文件大小：24,020 字节 (已压缩，原始大小：53,248 字节)
+  · 文件大小：23,979 字节 (已压缩，原始大小：53,248 字节)
 ```
 
 ---
@@ -124,7 +124,7 @@
 > - __该功能会对程序执行基于声誉的安全检查__
 > - __由于本程序没有购买数字证书，且不是通过 `Microsoft Store` 分发的，导致其可能无法通过 `SmartScreen` 的安全检测__
 > - __程序本身是安全的，出现 `SmartScreen` 警告时，请手动忽略__
->> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/ddc62f6d31adb0ce7180644eb4a9e72a5822a4ddfb683b3de4befe49b74b8919)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/ce77b36e3fcf93ba4298e2a8fb535d278e8988b72cf99c5c71a91f7a352bc98a)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
+>> __检测报告：[`GWCT.exe`](https://s.threatbook.com/report/file/1240ef41bfd34701f992b5e15483563a173850d2d06787288174921f6d9f4ddf)&nbsp;&nbsp;[`gwctcore.dll`](https://s.threatbook.com/report/file/1a0fe3faf672125e2b3706f439c4870281d77f6215246e94d872e1251b0ed225)，来源：[微步云沙箱](https://s.threatbook.com)，可能需要登录才能查看__  
 >> - __请注意，报告中行为分析中的风险项并非真正存在风险，其中部分为实现功能所必须的行为，部分为 `.Net` 框架底层的自发行为__
 >> - __如有疑问，可自行查看源代码进行分析，作者从未在程序中植入恶意代码，可放心使用__
 
