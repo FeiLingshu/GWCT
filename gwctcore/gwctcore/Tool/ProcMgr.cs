@@ -121,7 +121,7 @@ namespace GWCT.Tool
             if (GetProcessInfosMethod == null || PidProperty == null || NameProperty == null) throw new ArgumentNullException("ProcMgr组件初始化失败。");
             winctrl.IsWorking = true;
             if (winctrl.IsWorking) winctrl.output($"ProcMgr组件已启动 (#{Task.CurrentId})", false);
-            HashSet<string> ProcFlag = new HashSet<string>(64);
+            HashSet<int> ProcFlag = new HashSet<int>(64);
             SemaphoreSlim ProcFlagLock = new SemaphoreSlim(1, 1);
             List<int> indexpool = new List<int>(64);
             while (winctrl.IsWorking)
@@ -144,7 +144,7 @@ namespace GWCT.Tool
                             if (Pause.Contains(paths[i])) continue;
                         }
                         finally { ValueLock.Release(); }
-                        if (!ProcFlag.Contains(paths[i])) indexpool.Add(i);
+                        indexpool.Add(i);
                     }
                     ProcFlagLock.Release();
                     if (indexpool.Count > 0)
@@ -185,10 +185,11 @@ namespace GWCT.Tool
                                 {
                                     foreach (int pid in pids)
                                     {
+                                        IntPtr phandle = IntPtr.Zero;
                                         try
                                         {
                                             // 由于游戏进程受到保护，process.MainModule.FileName会产生拒绝访问的win32异常
-                                            IntPtr phandle = OpenProcess(
+                                            phandle = OpenProcess(
                                                 ProcessAccessFlags.PROCESS_QUERY_INFORMATION | ProcessAccessFlags.PROCESS_VM_READ,
                                                 false, pid);
                                             if (phandle != IntPtr.Zero)
@@ -201,18 +202,19 @@ namespace GWCT.Tool
                                                 if (p == paths[index])
                                                 {
                                                     await ProcFlagLock.WaitAsync();
-                                                    ProcFlag.Add(paths[index]);
+                                                    bool add = ProcFlag.Add(pid);
                                                     ProcFlagLock.Release();
-                                                    ProcessList.Add((pid, paths[index]));
-                                                    CloseHandle(phandle);
-                                                    break;
+                                                    if (add) ProcessList.Add((pid, paths[index]));
                                                 }
-                                                CloseHandle(phandle);
                                             }
                                         }
                                         catch (Exception)
                                         {
                                             continue;
+                                        }
+                                        finally
+                                        {
+                                            if (phandle != IntPtr.Zero) CloseHandle(phandle);
                                         }
                                     }
                                 }
@@ -229,39 +231,29 @@ namespace GWCT.Tool
                                     TaskCount.Add(out long _tidvalue);
                                     int timeout = 0;
                                     Process game = Process.GetProcessById(pid);
-                                    IntPtr hwnd = IntPtr.Zero;
+                                    bool winhandle = false;
                                     do
                                     {
-                                        if (game.HasExited || timeout == 300)
+                                        if (game.HasExited || timeout == 30)
                                         {
                                             game.Dispose();
                                             await ProcFlagLock.WaitAsync();
-                                            ProcFlag.Remove(path);
+                                            ProcFlag.Remove(pid);
                                             ProcFlagLock.Release();
                                             TaskCount.Release(_tidvalue);
                                             return;
                                         }
-                                        await Task.Delay(100);
+                                        await Task.Delay(1000);
                                         timeout++;
                                         try
                                         {
-                                            hwnd = game.MainWindowHandle;
+                                            winhandle = game.MainWindowHandle != IntPtr.Zero;
                                         }
                                         catch (Exception) { }
-                                    } while (hwnd == IntPtr.Zero);
-                                    await Task.Delay(1000); // 为了防止游戏窗口已初始化但未呈现 OR 呈现后极短时间内被销毁，以下为冗余代码
-                                    if (game.HasExited || game.MainWindowHandle == IntPtr.Zero)
-                                    {
-                                        game.Dispose();
-                                        await ProcFlagLock.WaitAsync();
-                                        ProcFlag.Remove(path);
-                                        ProcFlagLock.Release();
-                                        TaskCount.Release(_tidvalue);
-                                        return;
-                                    }
+                                    } while (!winhandle);
                                     using (game)
                                     {
-                                        if (!game.HasExited)
+                                        if (!game.HasExited && game.MainWindowHandle != IntPtr.Zero) // 重复验证
                                         {
                                             string pname = game.ProcessName;
                                             int id = game.Id;
@@ -340,7 +332,7 @@ namespace GWCT.Tool
                                         }
                                     }
                                     await ProcFlagLock.WaitAsync();
-                                    ProcFlag.Remove(path);
+                                    ProcFlag.Remove(pid);
                                     ProcFlagLock.Release();
                                     TaskCount.Release(_tidvalue);
                                     return;
